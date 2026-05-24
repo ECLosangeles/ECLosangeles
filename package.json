@@ -1,0 +1,41 @@
+{
+  "name": "eclosangeles",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ECLosangeles — community website for the Ethiopian Community of Los Angeles. Headless WordPress + Next.js monorepo.",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @eclosangeles/web dev",
+    "build": "pnpm -r --filter=!@eclosangeles/cms build",
+    "start": "pnpm --filter @eclosangeles/web start",
+    "lint": "pnpm -r --filter=!@eclosangeles/cms lint",
+    "typecheck": "pnpm -r --filter=!@eclosangeles/cms typecheck",
+    "test": "pnpm -r --filter=!@eclosangeles/cms test",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\" --ignore-path .gitignore",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0"
+  }
+}

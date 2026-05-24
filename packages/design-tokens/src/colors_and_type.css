@@ -1,0 +1,396 @@
+/* =============================================================
+   Eclosangeles Design System — Tokens
+   colors_and_type.css
+
+   All colors, typography, spacing, radii, shadows, motion.
+   Import this file at the root of any page using the system.
+
+   Note: Font @import removed — fonts are loaded via next/font
+   in apps/web/app/layout.tsx. Font CSS variables (--font-display,
+   --font-body, --font-amharic) are wired by next/font and must
+   stay named exactly as below.
+   ============================================================= */
+
+:root {
+  /* ------------------------------------------------------------
+     COLOR — Primitives
+     Pan-African / Ethiopian palette, modernized.
+     ------------------------------------------------------------ */
+
+  /* Forest — primary brand color (drawn from Ethiopian flag green,
+     deepened for accessibility on cream). */
+  --green-50: #eef5ee;
+  --green-100: #d6e6d6;
+  --green-200: #adccad;
+  --green-300: #7ca97d;
+  --green-400: #4f8651;
+  --green-500: #2f6b33; /* primary */
+  --green-600: #245426;
+  --green-700: #1b401d;
+  --green-800: #142e15;
+  --green-900: #0d1f0e;
+
+  /* Saffron — accent (Ethiopian flag yellow, warmed). */
+  --saffron-50: #fdf6e3;
+  --saffron-100: #faecc2;
+  --saffron-200: #f5d984;
+  --saffron-300: #efc44c;
+  --saffron-400: #e6ae21; /* accent */
+  --saffron-500: #c8951a;
+  --saffron-600: #a47a14;
+  --saffron-700: #7c5c0f;
+
+  /* Cochineal — energy / CTA (Ethiopian flag red, deepened). */
+  --red-50: #fbedea;
+  --red-100: #f5d2cc;
+  --red-200: #eaa499;
+  --red-300: #dd7165;
+  --red-400: #cc4738;
+  --red-500: #b0301f; /* CTA */
+  --red-600: #8c2418;
+  --red-700: #6a1a12;
+
+  /* Coffee / Earth — warm neutrals (drawn from coffee ceremony,
+     injera, traditional pottery). */
+  --earth-50: #fbf6ee; /* cream — primary background */
+  --earth-100: #f4ecdd;
+  --earth-200: #e8dbc1;
+  --earth-300: #d4c29d;
+  --earth-400: #b59e73;
+  --earth-500: #8e7a56;
+  --earth-600: #6b5c40;
+  --earth-700: #4a3f2c;
+  --earth-800: #2e2719;
+  --earth-900: #1b1410; /* near-black brown — primary ink */
+
+  /* Pure utility */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* ------------------------------------------------------------
+     COLOR — Semantic
+     Use these in components, not the primitives above.
+     ------------------------------------------------------------ */
+
+  /* Backgrounds */
+  --bg-base: var(--earth-50); /* page background — cream */
+  --bg-surface: var(--white); /* cards on cream */
+  --bg-elevated: var(--white); /* popovers, modals */
+  --bg-inverse: var(--green-700); /* dark sections (full-bleed green) */
+  --bg-muted: var(--earth-100); /* subtle panel inset */
+  --bg-tinted: var(--green-50); /* tinted callout */
+  --bg-warning: var(--saffron-50);
+  --bg-danger: var(--red-50);
+
+  /* Foreground (text) */
+  --fg-1: var(--earth-900); /* primary ink — headlines, body */
+  --fg-2: var(--earth-700); /* secondary — meta, captions */
+  --fg-3: var(--earth-500); /* tertiary — subtle labels */
+  --fg-muted: var(--earth-400); /* placeholder text */
+  --fg-on-inverse: var(--earth-50); /* text on green */
+  --fg-on-inverse-2: #c8dbc9; /* secondary text on green */
+  --fg-brand: var(--green-500);
+  --fg-accent: var(--saffron-500);
+  --fg-cta: var(--red-500);
+  --fg-link: var(--green-600);
+
+  /* Borders */
+  --border-soft: rgba(74, 63, 44, 0.12); /* hairline, default */
+  --border-strong: rgba(74, 63, 44, 0.24);
+  --border-focus: var(--green-500);
+  --border-on-inverse: rgba(251, 246, 238, 0.18);
+
+  /* States — buttons, controls */
+  --primary-bg: var(--green-500);
+  --primary-bg-hover: var(--green-600);
+  --primary-bg-press: var(--green-700);
+  --primary-fg: var(--earth-50);
+
+  --cta-bg: var(--red-500);
+  --cta-bg-hover: var(--red-600);
+  --cta-bg-press: var(--red-700);
+  --cta-fg: var(--earth-50);
+
+  --secondary-bg: transparent;
+  --secondary-bg-hover: rgba(47, 107, 51, 0.08);
+  --secondary-fg: var(--green-700);
+  --secondary-border: var(--green-500);
+
+  --ghost-bg-hover: rgba(74, 63, 44, 0.06);
+
+  /* ------------------------------------------------------------
+     TYPOGRAPHY — Families
+     These CSS variables are populated by next/font in apps/web.
+     The fallback stacks below ensure non-Next consumers (e.g.
+     standalone HTML preview) still render reasonably.
+     ------------------------------------------------------------ */
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Apple Garamond', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-amharic: 'Noto Sans Ethiopic', 'Nyala', 'Abyssinica SIL', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  /* ------------------------------------------------------------
+     TYPOGRAPHY — Type scale (semantic)
+     ------------------------------------------------------------ */
+
+  /* Display & headings (Fraunces) */
+  --text-display-1-size: 96px;
+  --text-display-1-line: 96px;
+  --text-display-1-tracking: -0.02em;
+  --text-display-1-weight: 500;
+
+  --text-display-2-size: 72px;
+  --text-display-2-line: 76px;
+  --text-display-2-tracking: -0.02em;
+  --text-display-2-weight: 500;
+
+  --text-h1-size: 56px;
+  --text-h1-line: 62px;
+  --text-h1-tracking: -0.018em;
+  --text-h1-weight: 500;
+
+  --text-h2-size: 40px;
+  --text-h2-line: 48px;
+  --text-h2-tracking: -0.014em;
+  --text-h2-weight: 500;
+
+  --text-h3-size: 28px;
+  --text-h3-line: 36px;
+  --text-h3-tracking: -0.01em;
+  --text-h3-weight: 600;
+
+  --text-h4-size: 22px;
+  --text-h4-line: 30px;
+  --text-h4-tracking: -0.005em;
+  --text-h4-weight: 600;
+
+  /* Body & UI (Inter) */
+  --text-lead-size: 20px;
+  --text-lead-line: 32px;
+  --text-lead-weight: 400;
+
+  --text-body-size: 17px;
+  --text-body-line: 28px;
+  --text-body-weight: 400;
+
+  --text-small-size: 15px;
+  --text-small-line: 24px;
+
+  --text-caption-size: 13px;
+  --text-caption-line: 20px;
+
+  --text-eyebrow-size: 12px;
+  --text-eyebrow-line: 16px;
+  --text-eyebrow-tracking: 0.08em;
+  --text-eyebrow-weight: 600;
+
+  /* ------------------------------------------------------------
+     SPACING — 8px-based scale (with 4px micro-step)
+     ------------------------------------------------------------ */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 160px;
+
+  /* ------------------------------------------------------------
+     RADII
+     ------------------------------------------------------------ */
+  --radius-xs: 4px;
+  --radius-sm: 10px; /* buttons, inputs */
+  --radius-md: 16px; /* cards, images */
+  --radius-lg: 24px; /* hero blocks, feature panels */
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* ------------------------------------------------------------
+     SHADOWS — Warm-tinted (brown, not gray)
+     ------------------------------------------------------------ */
+  --shadow-xs: 0 1px 2px rgba(60, 30, 10, 0.05);
+  --shadow-sm: 0 2px 6px rgba(60, 30, 10, 0.06), 0 1px 2px rgba(60, 30, 10, 0.04);
+  --shadow-md: 0 8px 20px rgba(60, 30, 10, 0.08), 0 2px 6px rgba(60, 30, 10, 0.05);
+  --shadow-lg: 0 20px 48px rgba(60, 30, 10, 0.14), 0 4px 12px rgba(60, 30, 10, 0.06);
+  --shadow-focus: 0 0 0 3px rgba(47, 107, 51, 0.28);
+
+  /* ------------------------------------------------------------
+     MOTION
+     ------------------------------------------------------------ */
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-emphasis: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+
+  /* ------------------------------------------------------------
+     LAYOUT
+     ------------------------------------------------------------ */
+  --container-max: 1200px;
+  --container-wide: 1440px;
+  --container-narrow: 720px;
+  --header-height: 72px;
+}
+
+/* =============================================================
+   Element defaults — semantic styling
+   Apply by including this file; works without classes.
+   ============================================================= */
+
+html {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--fg-1);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line);
+  font-weight: var(--text-body-weight);
+}
+
+/* Headings — Fraunces */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: var(--fg-1);
+  margin: 0;
+  text-wrap: balance;
+}
+h4,
+h5,
+h6 {
+  font-family: var(--font-body);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-h1-size);
+  line-height: var(--text-h1-line);
+  letter-spacing: var(--text-h1-tracking);
+  font-weight: var(--text-h1-weight);
+}
+h2 {
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-line);
+  letter-spacing: var(--text-h2-tracking);
+  font-weight: var(--text-h2-weight);
+}
+h3 {
+  font-size: var(--text-h3-size);
+  line-height: var(--text-h3-line);
+  letter-spacing: var(--text-h3-tracking);
+  font-weight: var(--text-h3-weight);
+}
+h4 {
+  font-size: var(--text-h4-size);
+  line-height: var(--text-h4-line);
+  letter-spacing: var(--text-h4-tracking);
+  font-weight: var(--text-h4-weight);
+}
+
+p {
+  margin: 0 0 var(--space-4) 0;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line);
+  color: var(--fg-1);
+  text-wrap: pretty;
+}
+
+/* Lead paragraph — used after a heading for intro copy */
+.lead {
+  font-size: var(--text-lead-size);
+  line-height: var(--text-lead-line);
+  color: var(--fg-2);
+}
+
+/* Eyebrow — small ALL-CAPS label above headings */
+.eyebrow {
+  font-size: var(--text-eyebrow-size);
+  line-height: var(--text-eyebrow-line);
+  letter-spacing: var(--text-eyebrow-tracking);
+  font-weight: var(--text-eyebrow-weight);
+  text-transform: uppercase;
+  color: var(--fg-brand);
+}
+
+/* Mission italic — used for the mission statement, sparingly */
+.mission {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 40px;
+  color: var(--fg-1);
+}
+
+/* Amharic — wherever Ge'ez script appears */
+.amharic,
+[lang='am'] {
+  font-family: var(--font-amharic);
+}
+
+/* Links */
+a {
+  color: var(--fg-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    text-decoration-thickness var(--duration-fast) var(--ease-standard);
+}
+a:hover {
+  color: var(--fg-cta);
+  text-decoration-thickness: 2px;
+}
+
+/* Code */
+code,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+/* Caption / small */
+small,
+.caption {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line);
+  color: var(--fg-2);
+}
+
+/* Selection */
+::selection {
+  background: var(--saffron-200);
+  color: var(--earth-900);
+}
+
+/* Focus — visible, brand-colored */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-xs);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

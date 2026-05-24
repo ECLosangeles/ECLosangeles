@@ -1,0 +1,8 @@
+.eyebrow {
+  font-size: var(--text-eyebrow-size);
+  line-height: var(--text-eyebrow-line);
+  letter-spacing: var(--text-eyebrow-tracking);
+  font-weight: var(--text-eyebrow-weight);
+  text-transform: uppercase;
+  color: var(--fg-brand);
+}

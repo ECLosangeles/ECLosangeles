@@ -1,0 +1,34 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.green {
+  background: var(--green-50);
+  color: var(--green-700);
+}
+
+.saffron {
+  background: var(--saffron-50);
+  color: var(--saffron-700);
+}
+
+.red {
+  background: var(--red-50);
+  color: var(--red-700);
+}
+
+.ink {
+  background: var(--earth-100);
+  color: var(--earth-700);
+}
+
+.solid {
+  background: var(--green-500);
+  color: var(--earth-50);
+}

@@ -1,0 +1,29 @@
+.main {
+  background: var(--bg-base);
+  padding: var(--space-9) var(--space-6) 0;
+}
+
+.intro {
+  max-width: 880px;
+  margin: 0 auto var(--space-8);
+}
+
+.title {
+  font-size: 56px;
+  line-height: 62px;
+  margin: 12px 0 var(--space-5);
+}
+
+@media (max-width: 880px) {
+  .title {
+    font-size: 36px;
+    line-height: 42px;
+  }
+}
+
+.lead {
+  font-size: 20px;
+  line-height: 32px;
+  color: var(--fg-2);
+  margin: 0;
+}

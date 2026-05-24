@@ -1,0 +1,23 @@
+{
+  "name": "@eclosangeles/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ECLA brand design tokens — colors, typography, spacing, radii, shadows, motion. Source of truth for all surfaces.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./colors_and_type.css": "./src/colors_and_type.css"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

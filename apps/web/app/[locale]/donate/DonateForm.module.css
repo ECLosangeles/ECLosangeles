@@ -1,0 +1,148 @@
+.card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+}
+
+.amountRow {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.amountChip {
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  border: 1.5px solid var(--border-soft);
+  background: var(--bg-surface);
+  color: var(--fg-1);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.amountChip:hover {
+  border-color: var(--green-300);
+}
+
+.amountChipActive {
+  border: 2px solid var(--green-500);
+  background: var(--green-50);
+  color: var(--green-700);
+}
+
+.customWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+}
+
+.dollar {
+  color: var(--fg-2);
+}
+
+.customInput {
+  width: 100px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  background: var(--bg-surface);
+  color: var(--fg-1);
+  outline: none;
+}
+
+.customInput:focus {
+  border-color: var(--green-500);
+}
+
+.eyebrowSpaced {
+  display: block;
+  margin-top: var(--space-5);
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+@media (max-width: 600px) {
+  .nameRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-1);
+}
+
+.input {
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  background: var(--bg-surface);
+  color: var(--fg-1);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.input:focus {
+  border-color: var(--green-500);
+}
+
+.error {
+  color: var(--fg-cta);
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.submitRow {
+  margin-top: var(--space-6);
+}
+
+.disclaimer {
+  font-size: 13px;
+  color: var(--fg-3);
+  margin-top: var(--space-4);
+  margin-bottom: 0;
+}
+
+.successCard {
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.successTitle {
+  font-size: 32px;
+  line-height: 40px;
+  margin: 12px 0 var(--space-4);
+  color: var(--green-700);
+}
+
+.successBody {
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--fg-1);
+  margin: 0;
+}

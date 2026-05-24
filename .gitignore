@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+.next/
+.next-dev/
+out/
+dist/
+build/
+*.tsbuildinfo
+
+# Environment
+.env
+.env*.local
+
+# IDE / editor
+.claude/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# WordPress (Phase 4+) — wp-env stores WP installs locally
+apps/cms/wordpress/
+apps/cms/.wp-env-home/
+
+# Misc
+.turbo/
+.cache/

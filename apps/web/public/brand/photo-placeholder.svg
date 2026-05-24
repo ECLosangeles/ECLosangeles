@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Photo placeholder">
+  <rect width="800" height="600" fill="#2F6B33"></rect>
+  <rect x="0" y="0" width="800" height="600" fill="url(#g)" opacity="0.15"></rect>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBF6EE" stop-opacity="0.2"></stop>
+      <stop offset="1" stop-color="#0D1F0E" stop-opacity="0.4"></stop>
+    </linearGradient>
+  </defs>
+  <text x="400" y="335" text-anchor="middle" font-family="&#39;Noto Sans Ethiopic&#39;, &#39;Nyala&#39;, serif" font-size="180" font-weight="700" fill="#E6AE21" opacity="0.75">ኢ</text>
+</svg>

@@ -1,0 +1,143 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--space-9) var(--space-6);
+  background: linear-gradient(180deg, rgba(47, 107, 51, 0.06), transparent 38%), var(--earth-200);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    url('/brand/motifs/meskel.svg'), url('/brand/motifs/meskel.svg'),
+    url('/brand/motifs/tibeb-stripe.svg'), url('/brand/motifs/tibeb-stripe.svg');
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position:
+    8% 18%,
+    92% 74%,
+    -96px 100px,
+    calc(100% + 120px) calc(100% - 72px);
+  background-size:
+    128px 128px,
+    168px 168px,
+    420px 21px,
+    380px 19px;
+  mix-blend-mode: multiply;
+}
+
+.inner {
+  position: relative;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: 48px;
+  line-height: 56px;
+  margin: 12px 0 0;
+  max-width: 720px;
+}
+
+@media (max-width: 880px) {
+  .title {
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--earth-50);
+  border: 1px solid var(--earth-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard);
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--earth-100);
+}
+
+.image {
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+.card:hover .image,
+.card:focus-within .image {
+  transform: scale(1.06);
+}
+
+.number {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  border-radius: var(--radius-pill);
+  padding: 6px 11px;
+  background: rgba(13, 31, 14, 0.55);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--saffron-300);
+  line-height: 1;
+  backdrop-filter: blur(8px);
+}
+
+.content {
+  padding: 14px 16px 18px;
+}
+
+.name {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+  color: var(--green-700);
+}
+
+.description {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--earth-700);
+  margin: 6px 0 0;
+}

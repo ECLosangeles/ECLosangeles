@@ -1,0 +1,54 @@
+@import '@eclosangeles/design-tokens/colors_and_type.css';
+
+/* ----------------------------------------------------------
+   Next.js / browser baseline tweaks layered over the tokens.
+   The token file already sets html/body defaults — this just
+   adds a couple of resets specific to the App Router runtime.
+   ---------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(230, 174, 33, 0.18), transparent 30rem),
+    radial-gradient(circle at 85% 12%, rgba(47, 107, 51, 0.16), transparent 28rem),
+    linear-gradient(180deg, var(--earth-50) 0%, #f7efe1 48%, var(--earth-100) 100%);
+  color: var(--fg-1);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.32;
+  background-image:
+    linear-gradient(rgba(74, 63, 44, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 63, 44, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, black, transparent 82%);
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}

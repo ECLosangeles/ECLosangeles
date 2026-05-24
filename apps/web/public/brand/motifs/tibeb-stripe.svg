@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 24" width="480" height="24" preserveAspectRatio="none" role="img" aria-label="Tibeb embroidery motif">
+  <defs>
+    <pattern id="tibeb" x="0" y="0" width="40" height="24" patternUnits="userSpaceOnUse">
+      <rect width="40" height="24" fill="#2F6B33"></rect>
+      <path d="M0 12 L8 4 L16 12 L24 4 L32 12 L40 4" stroke="#E6AE21" stroke-width="1.5" fill="none"></path>
+      <path d="M0 20 L8 12 L16 20 L24 12 L32 20 L40 12" stroke="#B0301F" stroke-width="1.5" fill="none"></path>
+      <circle cx="20" cy="12" r="1.5" fill="#FBF6EE"></circle>
+    </pattern>
+  </defs>
+  <rect width="480" height="24" fill="url(#tibeb)"></rect>
+</svg>

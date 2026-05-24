@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" width="360" height="96" role="img" aria-label="ECLA — Ethiopian Community Los Angeles">
+  <circle cx="48" cy="48" r="44" fill="#2F6B33"></circle>
+  <circle cx="48" cy="48" r="44" fill="none" stroke="#E6AE21" stroke-width="2.5"></circle>
+  <text x="48" y="62" text-anchor="middle" font-family="&#39;Noto Sans Ethiopic&#39;, &#39;Nyala&#39;, serif" font-size="52" font-weight="700" fill="#FBF6EE">ኢ</text>
+  <text x="108" y="44" font-family="&#39;Fraunces&#39;, Georgia, serif" font-size="28" font-weight="600" fill="#1B1410" letter-spacing="-0.5">ECLA</text>
+  <text x="108" y="68" font-family="&#39;Inter&#39;, sans-serif" font-size="13" font-weight="500" fill="#4A3F2C" letter-spacing="0.5">ETHIOPIAN COMMUNITY</text>
+  <text x="108" y="84" font-family="&#39;Inter&#39;, sans-serif" font-size="13" font-weight="500" fill="#4A3F2C" letter-spacing="0.5">LOS ANGELES</text>
+</svg>
