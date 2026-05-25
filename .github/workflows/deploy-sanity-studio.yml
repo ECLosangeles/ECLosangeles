@@ -41,4 +41,4 @@ jobs:
         run: npm ci
 
       - name: Deploy to Sanity
-        run: npm run deploy -- --yes --url=https://eclosangeles.sanity.studio
+        run: npm run deploy -- --yes --url=eclosangeles
