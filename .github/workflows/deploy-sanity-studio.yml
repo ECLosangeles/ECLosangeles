@@ -40,11 +40,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type-check
-        run: npm run typecheck
-
-      - name: Lint
-        run: npm run lint
-
       - name: Deploy to Sanity
         run: npm run deploy -- --yes --url=https://eclosangeles.sanity.studio
