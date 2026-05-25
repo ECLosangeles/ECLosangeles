@@ -22,6 +22,28 @@ This is where editors manage the content the public website (`apps/web`) renders
 | `npm run lint`      | Lint the Studio.                                                  |
 | `npm run seed`      | Seed the Home Page documents (uploads brand images). See below.   |
 
+## Deployment
+
+The Studio deploys separately from the public Next.js site. GitHub Actions runs
+[`deploy-sanity-studio.yml`](../.github/workflows/deploy-sanity-studio.yml) on
+pushes to `main` when files under `studio-eclosangeles/**` change, and can also
+be run manually from the Actions tab.
+
+The deployed Studio host is configured in [`sanity.cli.ts`](./sanity.cli.ts):
+
+```text
+https://eclosangeles.sanity.studio
+```
+
+Before the workflow can deploy, add this repository secret in GitHub:
+
+```text
+SANITY_AUTH_TOKEN
+```
+
+Create the token from Sanity with deploy/write access for project `b59x306d`.
+Do not commit the token to the repo.
+
 ## Content model
 
 Content types live in [`schemaTypes/`](./schemaTypes). Today there is one:
