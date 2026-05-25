@@ -6,9 +6,6 @@ export default defineCliConfig({
     dataset: 'production',
   },
   deployment: {
-    // Required for unattended CI deploys. The Studio will be served at:
-    // https://eclosangeles.sanity.studio
-    studioHost: 'eclosangeles',
     /**
      * Enable auto-updates for studios.
      * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56

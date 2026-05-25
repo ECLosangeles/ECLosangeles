@@ -47,4 +47,4 @@ jobs:
         run: npm run lint
 
       - name: Deploy to Sanity
-        run: npm run deploy -- --yes
+        run: npm run deploy -- --yes --url=https://eclosangeles.sanity.studio

@@ -29,7 +29,7 @@ The Studio deploys separately from the public Next.js site. GitHub Actions runs
 pushes to `main` when files under `studio-eclosangeles/**` change, and can also
 be run manually from the Actions tab.
 
-The deployed Studio host is configured in [`sanity.cli.ts`](./sanity.cli.ts):
+The deployed Studio host is passed by the GitHub Actions deploy command:
 
 ```text
 https://eclosangeles.sanity.studio
