@@ -114,13 +114,16 @@ export const homePage = defineType({
       fields: [
         defineField({name: 'eyebrow', title: 'Eyebrow', type: 'string'}),
         defineField({name: 'title', title: 'Title', type: 'string'}),
+        defineField({name: 'description', title: 'Description', type: 'text', rows: 2}),
         defineField({
           name: 'items',
           title: 'Program Cards',
+          description: 'Cards rendered on the homepage Programs section and the Programs page.',
           type: 'array',
           of: [
             defineArrayMember({
               type: 'object',
+              title: 'Program Card',
               fields: [
                 defineField({
                   name: 'title',

@@ -9,7 +9,7 @@ import {
   ValuesBlock,
   VisionStrip,
 } from '@eclosangeles/ui';
-import { PROGRAMS, TIMELINE, VALUES, VISION } from '@/lib/mock-data';
+import { TIMELINE, VALUES, VISION } from '@/lib/mock-data';
 import type { Locale } from '@/i18n/routing';
 import { getHomePageContent } from '@/lib/sanity/home';
 import { withLocalePrefix } from '@/lib/withLocalePrefix';
@@ -47,12 +47,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
         mission={mission?.statement || undefined}
         tagline={mission?.tagline || undefined}
       />
-      <ProgramGrid
-        programs={programs?.items?.length ? programs.items : PROGRAMS}
-        linkPrefix={linkPrefix}
-        eyebrow={programs?.eyebrow || undefined}
-        title={programs?.title || undefined}
-      />
+      {programs?.items?.length ? (
+        <ProgramGrid
+          programs={programs.items}
+          linkPrefix={linkPrefix}
+          eyebrow={programs.eyebrow || undefined}
+          title={programs.title || undefined}
+        />
+      ) : null}
       <ValuesBlock
         values={values?.items?.length ? values.items : VALUES}
         eyebrow={values?.eyebrow || undefined}

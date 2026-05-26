@@ -1,11 +1,24 @@
-import type { Program } from '@eclosangeles/content-schema';
+export type ProgramSeed = {
+  slug: string
+  title: string
+  iconPath: string
+  iconAlt: string
+  tone: string
+  summary: string
+  body: string
+  helpsWith: string[]
+  whatToBring?: string
+  walkInClinic?: {
+    schedule: string
+    address: string
+  }
+}
 
-export const PROGRAMS: ReadonlyArray<Program> = [
+export const PROGRAMS: ProgramSeed[] = [
   {
     slug: 'child-parent',
     title: 'Child & Parent',
-    glyph: 'ል',
-    iconSrc: '/brand/childnparent.png',
+    iconPath: 'brand/childnparent.png',
     iconAlt: 'Child and parent support icon',
     tone: 'green-500',
     summary: 'Family preparedness, parenting resources, know-your-rights cards.',
@@ -20,12 +33,11 @@ export const PROGRAMS: ReadonlyArray<Program> = [
   {
     slug: 'youth',
     title: 'Youth',
-    glyph: 'ወ',
-    iconSrc: '/brand/youth.png',
+    iconPath: 'brand/youth.png',
     iconAlt: 'Youth program icon',
     tone: 'saffron-400',
     summary: 'Mentorship, college guidance, STEM direction, community involvement.',
-    body: 'ECLA youth programs pair young Ethiopian-Americans with mentors who share their background — supporting them through college applications, STEM exploration, and community leadership.',
+    body: 'ECLA youth programs pair young Ethiopian-Americans with mentors who share their background - supporting them through college applications, STEM exploration, and community leadership.',
     helpsWith: [
       'College application support and counseling',
       'STEM mentorship and lab access',
@@ -36,8 +48,7 @@ export const PROGRAMS: ReadonlyArray<Program> = [
   {
     slug: 'senior-services',
     title: 'Senior services',
-    glyph: 'አ',
-    iconSrc: '/brand/seniorservices.png',
+    iconPath: 'brand/seniorservices.png',
     iconAlt: 'Senior services icon',
     tone: 'earth-700',
     summary: 'Wellness, social inclusion, county-benefits help in Amharic.',
@@ -52,14 +63,13 @@ export const PROGRAMS: ReadonlyArray<Program> = [
   {
     slug: 'immigration',
     title: 'Immigration',
-    glyph: 'ሕ',
-    iconSrc: '/brand/immigration.png',
+    iconPath: 'brand/immigration.png',
     iconAlt: 'Immigration support icon',
     tone: 'red-500',
     summary: 'Know-your-rights resources, legal guidance, community education.',
-    body: 'Free, pro-bono, bilingual help with immigration paperwork — in Amharic or English. No appointment required for our weekly walk-in clinic.',
+    body: 'Free, pro-bono, bilingual help with immigration paperwork - in Amharic or English. No appointment required for our weekly walk-in clinic.',
     walkInClinic: {
-      schedule: 'Tuesdays, 10 AM – 2 PM',
+      schedule: 'Tuesdays, 10 AM - 2 PM',
       address: '8911 S Western Ave\nLos Angeles, CA 90047',
     },
     helpsWith: [
@@ -75,12 +85,11 @@ export const PROGRAMS: ReadonlyArray<Program> = [
   {
     slug: 'medical-health',
     title: 'Medical health',
-    glyph: 'ጤ',
-    iconSrc: '/brand/medicalhealth.png',
+    iconPath: 'brand/medicalhealth.png',
     iconAlt: 'Medical health icon',
     tone: 'green-600',
     summary: 'Public health workshops, bilingual health panels, clinic referrals.',
-    body: 'Bilingual public-health workshops, clinic referrals, and connections to community health workers — built around what community members actually ask about.',
+    body: 'Bilingual public-health workshops, clinic referrals, and connections to community health workers - built around what community members actually ask about.',
     helpsWith: [
       'Bilingual health panels and workshops',
       'Referrals to community clinics',
@@ -91,15 +100,14 @@ export const PROGRAMS: ReadonlyArray<Program> = [
   {
     slug: 'mental-health',
     title: 'Mental health',
-    glyph: 'ስ',
-    iconSrc: '/brand/mentalhealth.png',
+    iconPath: 'brand/mentalhealth.png',
     iconAlt: 'Mental health icon',
     tone: 'saffron-500',
     summary: 'Bilingual support, awareness, community-centered groups.',
-    body: 'Bilingual mental-health awareness, peer support groups, and our "Art & Mind" program — combining art-making with mental wellness in a community setting.',
+    body: 'Bilingual mental-health awareness, peer support groups, and our "Art & Mind" program - combining art-making with mental wellness in a community setting.',
     helpsWith: [
       'Peer support groups (Amharic & English)',
-      'Art & Mind — art-based mental-health meetups',
+      'Art & Mind - art-based mental-health meetups',
       'Referrals to bilingual therapists',
       'Workshops on stress, grief, and resilience',
     ],
@@ -107,12 +115,11 @@ export const PROGRAMS: ReadonlyArray<Program> = [
   {
     slug: 'social-cultural',
     title: 'Social & cultural',
-    glyph: 'ባ',
-    iconSrc: '/brand/socialncaltural.png',
+    iconPath: 'brand/socialncaltural.png',
     iconAlt: 'Social and cultural program icon',
     tone: 'green-700',
     summary: 'Heritage preservation, gatherings, cultural storytelling.',
-    body: 'From Meskel celebrations to coffee mornings to Amharic lessons — our social and cultural programs are how the community stays a community.',
+    body: 'From Meskel celebrations to coffee mornings to Amharic lessons - our social and cultural programs are how the community stays a community.',
     helpsWith: [
       'Coffee ceremonies and elder storytelling',
       'Meskel and other heritage celebrations',
@@ -120,8 +127,4 @@ export const PROGRAMS: ReadonlyArray<Program> = [
       'Cultural exchange with other LA communities',
     ],
   },
-];
-
-export function findProgramBySlug(slug: string): Program | undefined {
-  return PROGRAMS.find((p) => p.slug === slug);
-}
+]

@@ -32,6 +32,7 @@ export interface HomePageContent {
   programs?: {
     eyebrow?: string;
     title?: string;
+    description?: string;
     items?: ReadonlyArray<Program>;
   };
   values?: {
@@ -115,6 +116,31 @@ function isProgramTone(value: string | null | undefined): value is ProgramTone {
   );
 }
 
+function resolveProgram(
+  program: NonNullable<NonNullable<RawHomePage['programs']>['items']>[number],
+): Program {
+  return {
+    slug: program.slug?.current as string,
+    title: program.title as string,
+    glyph: program.glyph ?? '',
+    iconSrc: imageUrl(program.icon, PROGRAM_ICON_WIDTH),
+    iconAlt: clean(program.icon?.alt),
+    tone: isProgramTone(program.tone) ? program.tone : 'green-500',
+    summary: program.summary as string,
+    body: clean(program.body),
+    helpsWith: program.helpsWith?.filter(presentText),
+    whatToBring: clean(program.whatToBring),
+    walkInClinic:
+      program.walkInClinic &&
+      (presentText(program.walkInClinic.schedule) || presentText(program.walkInClinic.address))
+        ? {
+            schedule: program.walkInClinic.schedule ?? '',
+            address: program.walkInClinic.address ?? '',
+          }
+        : undefined,
+  };
+}
+
 function hasVideos(content: HomePageContent | null): boolean {
   return (content?.knowYourRights?.videos?.length ?? 0) > 0;
 }
@@ -163,6 +189,7 @@ const homePageQuery = defineQuery(`*[_type == "homePage" && language == $locale]
   programs{
     eyebrow,
     title,
+    description,
     items[]{
       slug,
       title,
@@ -238,6 +265,7 @@ function resolveHomePage(raw: RawHomePage): HomePageContent {
       ? {
           eyebrow: clean(raw.programs.eyebrow),
           title: clean(raw.programs.title),
+          description: clean(raw.programs.description),
           items: raw.programs.items
             ?.filter(
               (program) =>
@@ -245,27 +273,7 @@ function resolveHomePage(raw: RawHomePage): HomePageContent {
                 presentText(program.title) &&
                 presentText(program.summary),
             )
-            .map((program) => ({
-              slug: program.slug?.current as string,
-              title: program.title as string,
-              glyph: program.glyph ?? '',
-              iconSrc: imageUrl(program.icon, PROGRAM_ICON_WIDTH),
-              iconAlt: clean(program.icon?.alt),
-              tone: isProgramTone(program.tone) ? program.tone : 'green-500',
-              summary: program.summary as string,
-              body: clean(program.body),
-              helpsWith: program.helpsWith?.filter(presentText),
-              whatToBring: clean(program.whatToBring),
-              walkInClinic:
-                program.walkInClinic &&
-                (presentText(program.walkInClinic.schedule) ||
-                  presentText(program.walkInClinic.address))
-                  ? {
-                      schedule: program.walkInClinic.schedule ?? '',
-                      address: program.walkInClinic.address ?? '',
-                    }
-                  : undefined,
-            })),
+            .map(resolveProgram),
         }
       : undefined,
     values: raw.values
@@ -366,4 +374,30 @@ export async function getHomePageContent(locale: Locale): Promise<HomePageConten
   );
 
   return withFallbackSharedMedia(content, fallbackRaw ? resolveHomePage(fallbackRaw) : null);
+}
+
+export async function getProgramsContent(locale: Locale): Promise<{
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  items: ReadonlyArray<Program>;
+} | null> {
+  const content = await getHomePageContent(locale);
+  const programs = content?.programs;
+
+  if (!programs?.items?.length) {
+    return null;
+  }
+
+  return {
+    eyebrow: programs.eyebrow,
+    title: programs.title,
+    description: programs.description,
+    items: programs.items,
+  };
+}
+
+export async function getProgramBySlug(locale: Locale, slug: string): Promise<Program | null> {
+  const programs = await getProgramsContent(locale);
+  return programs?.items.find((program) => program.slug === slug) ?? null;
 }

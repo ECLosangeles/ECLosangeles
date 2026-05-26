@@ -1,4 +1,3 @@
-export { PROGRAMS, findProgramBySlug } from './programs';
 export { VALUES } from './values';
 export { EVENTS } from './events';
 export { TIMELINE } from './timeline';

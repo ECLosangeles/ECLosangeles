@@ -91,6 +91,7 @@ export type HomePage = {
   programs?: {
     eyebrow?: string;
     title?: string;
+    description?: string;
     items?: Array<{
       title?: string;
       slug?: Slug;
@@ -330,7 +331,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../apps/web/lib/sanity/home.ts
 // Variable: homePageQuery
-// Query: *[_type == "homePage" && language == $locale][0]{  hero{    tagline,    title,    titleEmphasis,    lead,    welcomeChip,    image,    ctas[]{label, href},    notes[]{label, body}  },  mission{eyebrow, statement, tagline},  programs{eyebrow, title, items[]{slug, title, glyph, icon, tone, summary, body, helpsWith, whatToBring, walkInClinic{schedule, address}}},  values{    eyebrow,    title,    items[]{order, name, description, image}  },  originStory{    eyebrow,    title,    paragraphs,    readMoreLabel,    href,    timeline[]{date, body}  },  events{    eyebrow,    title,    description,    allEventsLabel,    href,    flyers[]{image, href}  },  knowYourRights{    eyebrow,    title,    description,    videos[]{title, url}  },  vision{eyebrow, title, description, ctaLabel, href, items},  membership{eyebrow, title, description, href}}
+// Query: *[_type == "homePage" && language == $locale][0]{  hero{    tagline,    title,    titleEmphasis,    lead,    welcomeChip,    image,    ctas[]{label, href},    notes[]{label, body}  },  mission{eyebrow, statement, tagline},  programs{eyebrow, title, description, items[]{slug, title, glyph, icon, tone, summary, body, helpsWith, whatToBring, walkInClinic{schedule, address}}},  values{    eyebrow,    title,    items[]{order, name, description, image}  },  originStory{    eyebrow,    title,    paragraphs,    readMoreLabel,    href,    timeline[]{date, body}  },  events{    eyebrow,    title,    description,    allEventsLabel,    href,    flyers[]{image, href}  },  knowYourRights{    eyebrow,    title,    description,    videos[]{title, url}  },  vision{eyebrow, title, description, ctaLabel, href, items},  membership{eyebrow, title, description, href}}
 export type HomePageQueryResult = {
   hero: {
     tagline: string | null;
@@ -363,6 +364,7 @@ export type HomePageQueryResult = {
   programs: {
     eyebrow: string | null;
     title: string | null;
+    description: string | null;
     items: Array<{
       slug: Slug | null;
       title: string | null;
