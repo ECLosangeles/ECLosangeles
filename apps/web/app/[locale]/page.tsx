@@ -48,7 +48,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
         tagline={mission?.tagline || undefined}
       />
       <ProgramGrid
-        programs={PROGRAMS}
+        programs={programs?.items?.length ? programs.items : PROGRAMS}
         linkPrefix={linkPrefix}
         eyebrow={programs?.eyebrow || undefined}
         title={programs?.title || undefined}

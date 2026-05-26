@@ -1,5 +1,5 @@
 import { defineQuery } from 'groq';
-import type { TimelineEntry, Value } from '@eclosangeles/content-schema';
+import type { Program, ProgramTone, TimelineEntry, Value } from '@eclosangeles/content-schema';
 import type { Locale } from '@/i18n/routing';
 import { sanityFetch } from './client';
 import { imageUrl } from './image';
@@ -32,6 +32,7 @@ export interface HomePageContent {
   programs?: {
     eyebrow?: string;
     title?: string;
+    items?: ReadonlyArray<Program>;
   };
   values?: {
     eyebrow?: string;
@@ -88,6 +89,7 @@ type RawHomePage = NonNullable<HomePageQueryResult>;
 
 // Width hints (px) — chosen per usage so we don't ship full-res originals.
 const HERO_WIDTH = 1400;
+const PROGRAM_ICON_WIDTH = 320;
 const VALUE_WIDTH = 800;
 const FLYER_WIDTH = 1000;
 
@@ -99,6 +101,18 @@ function clean<T>(value: T | null | undefined): T | undefined {
 /** Drop array entries whose required string fields are null/empty. */
 function presentText(value: string | null | undefined): value is string {
   return typeof value === 'string' && value.length > 0;
+}
+
+function isProgramTone(value: string | null | undefined): value is ProgramTone {
+  return (
+    value === 'green-500' ||
+    value === 'green-600' ||
+    value === 'green-700' ||
+    value === 'saffron-400' ||
+    value === 'saffron-500' ||
+    value === 'red-500' ||
+    value === 'earth-700'
+  );
 }
 
 function hasVideos(content: HomePageContent | null): boolean {
@@ -146,7 +160,22 @@ const homePageQuery = defineQuery(`*[_type == "homePage" && language == $locale]
     notes[]{label, body}
   },
   mission{eyebrow, statement, tagline},
-  programs{eyebrow, title},
+  programs{
+    eyebrow,
+    title,
+    items[]{
+      slug,
+      title,
+      glyph,
+      icon,
+      tone,
+      summary,
+      body,
+      helpsWith,
+      whatToBring,
+      walkInClinic{schedule, address}
+    }
+  },
   values{
     eyebrow,
     title,
@@ -206,7 +235,38 @@ function resolveHomePage(raw: RawHomePage): HomePageContent {
         }
       : undefined,
     programs: raw.programs
-      ? { eyebrow: clean(raw.programs.eyebrow), title: clean(raw.programs.title) }
+      ? {
+          eyebrow: clean(raw.programs.eyebrow),
+          title: clean(raw.programs.title),
+          items: raw.programs.items
+            ?.filter(
+              (program) =>
+                presentText(program.slug?.current) &&
+                presentText(program.title) &&
+                presentText(program.summary),
+            )
+            .map((program) => ({
+              slug: program.slug?.current as string,
+              title: program.title as string,
+              glyph: program.glyph ?? '',
+              iconSrc: imageUrl(program.icon, PROGRAM_ICON_WIDTH),
+              iconAlt: clean(program.icon?.alt),
+              tone: isProgramTone(program.tone) ? program.tone : 'green-500',
+              summary: program.summary as string,
+              body: clean(program.body),
+              helpsWith: program.helpsWith?.filter(presentText),
+              whatToBring: clean(program.whatToBring),
+              walkInClinic:
+                program.walkInClinic &&
+                (presentText(program.walkInClinic.schedule) ||
+                  presentText(program.walkInClinic.address))
+                  ? {
+                      schedule: program.walkInClinic.schedule ?? '',
+                      address: program.walkInClinic.address ?? '',
+                    }
+                  : undefined,
+            })),
+        }
       : undefined,
     values: raw.values
       ? {
