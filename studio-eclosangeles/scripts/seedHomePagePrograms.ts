@@ -40,11 +40,8 @@ async function buildProgramItems() {
         title: program.title,
         slug: {_type: 'slug', current: program.slug},
         summary: program.summary,
-        body: program.body,
+        glyph: program.glyph,
         tone: program.tone,
-        helpsWith: program.helpsWith,
-        whatToBring: program.whatToBring,
-        walkInClinic: program.walkInClinic,
         icon: {...icon, alt: program.iconAlt},
       }
     }),
@@ -56,8 +53,6 @@ async function seed() {
   const programs = {
     eyebrow: 'What we do',
     title: 'Programs that meet you where you are.',
-    description:
-      'Seven program areas, all volunteer-powered, all built around what community members actually ask for.',
     items,
   }
 

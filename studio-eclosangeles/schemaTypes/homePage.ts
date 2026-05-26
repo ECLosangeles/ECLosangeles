@@ -114,11 +114,9 @@ export const homePage = defineType({
       fields: [
         defineField({name: 'eyebrow', title: 'Eyebrow', type: 'string'}),
         defineField({name: 'title', title: 'Title', type: 'string'}),
-        defineField({name: 'description', title: 'Description', type: 'text', rows: 2}),
         defineField({
           name: 'items',
           title: 'Program Cards',
-          description: 'Cards rendered on the homepage Programs section and the Programs page.',
           type: 'array',
           of: [
             defineArrayMember({
@@ -146,12 +144,6 @@ export const homePage = defineType({
                   validation: (rule) => rule.required(),
                 }),
                 defineField({
-                  name: 'body',
-                  title: 'Body',
-                  type: 'text',
-                  rows: 5,
-                }),
-                defineField({
                   name: 'glyph',
                   title: 'Fallback Glyph',
                   type: 'string',
@@ -171,22 +163,6 @@ export const homePage = defineType({
                   options: {list: programToneOptions, layout: 'dropdown'},
                   initialValue: 'green-500',
                   validation: (rule) => rule.required(),
-                }),
-                textArrayField('helpsWith', 'Helps With'),
-                defineField({
-                  name: 'whatToBring',
-                  title: 'What To Bring',
-                  type: 'text',
-                  rows: 3,
-                }),
-                defineField({
-                  name: 'walkInClinic',
-                  title: 'Walk-In Clinic',
-                  type: 'object',
-                  fields: [
-                    defineField({name: 'schedule', title: 'Schedule', type: 'string'}),
-                    defineField({name: 'address', title: 'Address', type: 'text', rows: 3}),
-                  ],
                 }),
               ],
               preview: {

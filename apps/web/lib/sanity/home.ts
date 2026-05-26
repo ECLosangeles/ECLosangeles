@@ -32,7 +32,6 @@ export interface HomePageContent {
   programs?: {
     eyebrow?: string;
     title?: string;
-    description?: string;
     items?: ReadonlyArray<Program>;
   };
   values?: {
@@ -127,17 +126,6 @@ function resolveProgram(
     iconAlt: clean(program.icon?.alt),
     tone: isProgramTone(program.tone) ? program.tone : 'green-500',
     summary: program.summary as string,
-    body: clean(program.body),
-    helpsWith: program.helpsWith?.filter(presentText),
-    whatToBring: clean(program.whatToBring),
-    walkInClinic:
-      program.walkInClinic &&
-      (presentText(program.walkInClinic.schedule) || presentText(program.walkInClinic.address))
-        ? {
-            schedule: program.walkInClinic.schedule ?? '',
-            address: program.walkInClinic.address ?? '',
-          }
-        : undefined,
   };
 }
 
@@ -189,18 +177,13 @@ const homePageQuery = defineQuery(`*[_type == "homePage" && language == $locale]
   programs{
     eyebrow,
     title,
-    description,
     items[]{
       slug,
       title,
       glyph,
       icon,
       tone,
-      summary,
-      body,
-      helpsWith,
-      whatToBring,
-      walkInClinic{schedule, address}
+      summary
     }
   },
   values{
@@ -265,7 +248,6 @@ function resolveHomePage(raw: RawHomePage): HomePageContent {
       ? {
           eyebrow: clean(raw.programs.eyebrow),
           title: clean(raw.programs.title),
-          description: clean(raw.programs.description),
           items: raw.programs.items
             ?.filter(
               (program) =>
@@ -379,7 +361,6 @@ export async function getHomePageContent(locale: Locale): Promise<HomePageConten
 export async function getProgramsContent(locale: Locale): Promise<{
   eyebrow?: string;
   title?: string;
-  description?: string;
   items: ReadonlyArray<Program>;
 } | null> {
   const content = await getHomePageContent(locale);
@@ -392,7 +373,6 @@ export async function getProgramsContent(locale: Locale): Promise<{
   return {
     eyebrow: programs.eyebrow,
     title: programs.title,
-    description: programs.description,
     items: programs.items,
   };
 }

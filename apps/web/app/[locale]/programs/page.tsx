@@ -23,7 +23,6 @@ export default async function ProgramsIndexPage({
       <div className={styles.intro}>
         <Eyebrow>{programs?.eyebrow ?? 'What we do'}</Eyebrow>
         <h1 className={styles.title}>{programs?.title ?? 'Programs'}</h1>
-        {programs?.description ? <p className={styles.lead}>{programs.description}</p> : null}
       </div>
       <div className={styles.grid}>
         {(programs?.items ?? []).map((p) => (
