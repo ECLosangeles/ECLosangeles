@@ -18,6 +18,8 @@ export * from './VisionStrip';
 export * from './MemberCard';
 export * from './MembershipBlock';
 export * from './Footer';
+export * from './DocumentEmbed';
+export * from './VideoEmbed';
 
 // Utilities
 export * from './PlaceholderBanner';

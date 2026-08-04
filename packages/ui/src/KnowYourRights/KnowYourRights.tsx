@@ -1,4 +1,5 @@
 import { Eyebrow } from '../Eyebrow';
+import { getYouTubeEmbedUrl } from '../VideoEmbed';
 import styles from './KnowYourRights.module.css';
 
 export interface KnowYourRightsVideo {
@@ -11,39 +12,6 @@ export interface KnowYourRightsProps {
   title?: string;
   eyebrow?: string;
   description?: string;
-}
-
-function getYouTubeEmbedUrl(url: string) {
-  try {
-    const parsedUrl = new URL(url);
-    const hostname = parsedUrl.hostname.replace(/^www\./, '');
-
-    if (hostname === 'youtube.com' || hostname === 'm.youtube.com') {
-      const videoId = parsedUrl.searchParams.get('v');
-
-      if (videoId) {
-        return `https://www.youtube.com/embed/${videoId}`;
-      }
-
-      const [, route, id] = parsedUrl.pathname.split('/');
-
-      if ((route === 'embed' || route === 'shorts') && id) {
-        return `https://www.youtube.com/embed/${id}`;
-      }
-    }
-
-    if (hostname === 'youtu.be') {
-      const id = parsedUrl.pathname.split('/').filter(Boolean)[0];
-
-      if (id) {
-        return `https://www.youtube.com/embed/${id}`;
-      }
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
 }
 
 export function KnowYourRights({

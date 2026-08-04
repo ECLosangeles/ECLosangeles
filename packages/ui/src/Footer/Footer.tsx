@@ -25,9 +25,9 @@ const DEFAULT_COLUMNS: ReadonlyArray<FooterColumn> = [
     links: [
       // ECLA's four official program areas. Keep in sync with
       // apps/web/lib/content/programs.ts.
-      { label: 'Immigration', href: '/programs/immigration' },
-      { label: 'Senior services', href: '/programs/senior-services' },
-      { label: 'Mental Wellbeing', href: '/programs/mental-wellbeing' },
+      { label: 'Immigration Services', href: '/programs/immigration' },
+      { label: 'Older Adult Services', href: '/programs/senior-services' },
+      { label: 'Mental Health Services', href: '/programs/mental-wellbeing' },
       { label: 'Workforce Development', href: '/programs/workforce-development' },
     ],
   },

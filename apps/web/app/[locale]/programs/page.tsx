@@ -7,7 +7,7 @@ import styles from './page.module.css';
 export const metadata: Metadata = {
   title: 'Programs',
   description:
-    'Four program areas serving Ethiopian families across Greater Los Angeles — immigration, senior services, mental wellbeing, and workforce development.',
+    'Four program areas serving Ethiopian families across Greater Los Angeles — immigration services, older adult services, mental health services, and workforce development.',
 };
 
 export default async function ProgramsIndexPage({

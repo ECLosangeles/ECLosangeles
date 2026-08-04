@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Button, Eyebrow } from '@eclosangeles/ui';
+import { Button, DocumentEmbed, Eyebrow, VideoEmbed } from '@eclosangeles/ui';
 import type { Locale } from '@/i18n/routing';
 import { routing } from '@/i18n/routing';
 import { getProgramBySlug, getProgramsContent } from '@/lib/content';
@@ -46,6 +46,42 @@ export default async function ProgramDetailPage({
         <Eyebrow>Program</Eyebrow>
         <h1 className={styles.title}>{program.title}</h1>
         <p className={styles.lead}>{program.body ?? program.summary}</p>
+
+        {program.videos && program.videos.length > 0 && (
+          <section className={styles.videos} aria-labelledby="program-videos">
+            <h2 id="program-videos" className={styles.sectionTitle}>
+              Watch
+            </h2>
+            {program.videos.map((video) => (
+              <VideoEmbed key={video.url} url={video.url} title={video.title} />
+            ))}
+          </section>
+        )}
+
+        {/* Some programs publish documents that must appear exactly as
+            supplied — shown in full rather than summarised or rewritten. */}
+        {program.documents && program.documents.length > 0 && (
+          <section className={styles.documents} aria-labelledby="program-documents">
+            <h2 id="program-documents" className={styles.sectionTitle}>
+              Know Your Rights
+            </h2>
+            <p className={styles.documentsLead}>
+              These guides are published by the organizations credited below and are reproduced here
+              unchanged. They are general information, not legal advice.
+            </p>
+            {program.documents.map((doc) => (
+              <DocumentEmbed
+                key={doc.src}
+                src={doc.src}
+                title={doc.title}
+                description={doc.description}
+                source={doc.source}
+                pages={doc.pages}
+                size={doc.size}
+              />
+            ))}
+          </section>
+        )}
 
         <div className={styles.layout}>
           <div className={styles.body}>

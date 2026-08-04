@@ -35,6 +35,32 @@ export interface Program {
   helpsWith?: string[];
   /** What attendees should bring to a walk-in or appointment */
   whatToBring?: string;
+  /** PDFs shown on the program's page, exactly as supplied */
+  documents?: ReadonlyArray<ProgramDocument>;
+  /** Videos embedded on the program's page */
+  videos?: ReadonlyArray<ProgramVideo>;
+}
+
+export interface ProgramVideo {
+  /** Title shown under the player */
+  title: string;
+  /** Full watch URL — youtube.com/watch?v=…, youtu.be/…, or /shorts/… */
+  url: string;
+}
+
+export interface ProgramDocument {
+  /** Path under `public/`, e.g. "/docs/know-your-rights.pdf" */
+  src: string;
+  /** Title shown above the viewer and used as the link label */
+  title: string;
+  /** One-line summary of what the document covers */
+  description?: string;
+  /** Who produced it — these are third-party resources and must be credited */
+  source?: string;
+  /** Page count, shown so readers know the length before opening */
+  pages?: number;
+  /** Human-readable download size, e.g. "8.8 MB" */
+  size?: string;
 }
 
 export interface WalkInClinic {
