@@ -97,8 +97,8 @@
   color: var(--green-700);
 }
 
-.navCaret span {
-  display: inline-block;
+.navCaret svg {
+  display: block;
   transition: transform var(--duration-fast) var(--ease-standard);
 }
 

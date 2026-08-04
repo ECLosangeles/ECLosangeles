@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Footer, type HeaderNavItem } from '@eclosangeles/ui';
 import { SiteHeader } from '@/components/SiteHeader';
+import { PROGRAMS } from '@/lib/content';
 import { routing, type Locale } from '@/i18n/routing';
 import '../globals.css';
 
@@ -74,7 +75,17 @@ export default async function LocaleLayout({
         { label: tNav('financials'), href: `/${locale}/about/financials` },
       ],
     },
-    { key: 'programs', label: tNav('programs'), href: `/${locale}/programs` },
+    {
+      key: 'programs',
+      label: tNav('programs'),
+      href: `/${locale}/programs`,
+      // Driven off the program list itself, so adding or retiring a program
+      // updates the nav without a second edit here.
+      children: PROGRAMS.map((program) => ({
+        label: program.title,
+        href: `/${locale}/programs/${program.slug}`,
+      })),
+    },
     { key: 'events', label: tNav('events'), href: `/${locale}/events` },
     { key: 'stories', label: tNav('stories'), href: `/${locale}/stories` },
     { key: 'membership', label: tNav('membership'), href: `/${locale}/membership` },

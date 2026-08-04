@@ -99,9 +99,24 @@ function NavDropdown({ item, subPages, isActive }: NavDropdownProps) {
         aria-controls={menuId}
         onClick={() => setOpen((isOpen) => !isOpen)}
       >
-        <span aria-hidden="true" className={open ? styles.navCaretOpen : undefined}>
-          ▾
-        </span>
+        {/* An inline SVG rather than a "▾" character — that glyph is missing
+            from many UI fonts and degrades to a faint dot. */}
+        <svg
+          aria-hidden="true"
+          className={open ? styles.navCaretOpen : undefined}
+          width="10"
+          height="7"
+          viewBox="0 0 10 7"
+          fill="none"
+        >
+          <path
+            d="M1 1.5 5 5.5 9 1.5"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
       <div id={menuId} className={styles.dropdown} hidden={!open}>
         {subPages.map((child) => (
