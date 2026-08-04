@@ -15,10 +15,6 @@ export interface HeroProps {
     label: string;
     href: string;
   }>;
-  notes?: ReadonlyArray<{
-    label: string;
-    body: string;
-  }>;
   /** Amharic welcome chip text shown over the hero image */
   welcomeChip?: string;
 }
@@ -31,11 +27,6 @@ const DEFAULT_CTAS: ReadonlyArray<{ label: string; href: string }> = [
   { label: 'Volunteer', href: '/about' },
   { label: 'Get services →', href: '/programs' },
 ];
-const DEFAULT_NOTES: ReadonlyArray<{ label: string; body: string }> = [
-  { label: '501(c)(3)', body: 'Volunteer-powered community care' },
-  { label: 'Greater LA', body: 'Services, culture, and family support' },
-];
-
 function resolveHref(linkPrefix: string, href: string) {
   if (href.startsWith('http') || href.startsWith('#') || href.startsWith(linkPrefix)) {
     return href;
@@ -53,7 +44,6 @@ export function Hero({
   titleEmphasis = DEFAULT_TITLE_EMPHASIS,
   lead = "An inclusive, nonpolitical, nonreligious civic organization — supporting our community's social, economic, educational, health, and cultural needs.",
   ctas = DEFAULT_CTAS,
-  notes = DEFAULT_NOTES,
   welcomeChip = 'እንኳን ደህና መጣችሁ',
 }: HeroProps) {
   return (
@@ -97,14 +87,6 @@ export function Hero({
         </div>
         <div className={styles.welcome} lang="am">
           {welcomeChip}
-        </div>
-        <div className={styles.heroNotes} aria-label="Community highlights">
-          {notes.slice(0, 2).map((note) => (
-            <div key={`${note.label}-${note.body}`} className={styles.stat}>
-              <span>{note.label}</span>
-              <strong>{note.body}</strong>
-            </div>
-          ))}
         </div>
       </div>
     </section>

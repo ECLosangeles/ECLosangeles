@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Eyebrow } from '@eclosangeles/ui';
-import { STORIES } from '@/lib/mock-data';
+import { STORIES } from '@/lib/content';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {

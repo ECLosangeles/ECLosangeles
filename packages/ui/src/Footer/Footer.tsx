@@ -15,7 +15,7 @@ const DEFAULT_COLUMNS: ReadonlyArray<FooterColumn> = [
       { label: 'Meet our board', href: '/about/board' },
       { label: 'Volunteers', href: '/about/volunteers' },
       { label: 'Our stories', href: '/stories' },
-      { label: 'Annual reports', href: '/about/reports' },
+      { label: 'Annual reports', href: '/about/annual-reports' },
       { label: 'Bylaws', href: '/about/bylaws' },
       { label: 'Financials', href: '/about/financials' },
     ],
@@ -23,13 +23,12 @@ const DEFAULT_COLUMNS: ReadonlyArray<FooterColumn> = [
   {
     title: 'Programs',
     links: [
-      { label: 'Child & parent', href: '/programs/child-parent' },
-      { label: 'Youth', href: '/programs/youth' },
-      { label: 'Senior services', href: '/programs/senior-services' },
+      // ECLA's four official program areas. Keep in sync with
+      // apps/web/lib/content/programs.ts.
       { label: 'Immigration', href: '/programs/immigration' },
-      { label: 'Medical health', href: '/programs/medical-health' },
-      { label: 'Mental health', href: '/programs/mental-health' },
-      { label: 'Social & cultural', href: '/programs/social-cultural' },
+      { label: 'Senior services', href: '/programs/senior-services' },
+      { label: 'Mental Wellbeing', href: '/programs/mental-wellbeing' },
+      { label: 'Workforce Development', href: '/programs/workforce-development' },
     ],
   },
   {
@@ -77,8 +76,16 @@ export function Footer({
         <div className={styles.top}>
           <div className={styles.brand}>
             <div className={styles.brandHead}>
-              <Image src="/brand/logo-mark.svg" width={36} height={36} alt="" aria-hidden="true" />
-              <span className={styles.wordmark}>ECLA</span>
+              {/* Negative treatment — the footer sits on Eerie Black. */}
+              <Image src="/brand/icons/lion.svg" width={36} height={36} alt="" aria-hidden="true" />
+              <Image
+                src="/brand/logo/logo-wordmark-light.svg"
+                width={74}
+                height={26}
+                alt=""
+                aria-hidden="true"
+                className={styles.wordmark}
+              />
             </div>
             <p className={styles.address}>
               Ethiopian Community Los Angeles

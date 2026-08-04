@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { EventsRail, Eyebrow } from '@eclosangeles/ui';
 import type { Locale } from '@/i18n/routing';
-import { getHomePageContent } from '@/lib/sanity/home';
+import { getHomePageContent } from '@/lib/content';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -12,28 +12,24 @@ export const metadata: Metadata = {
 
 export default async function EventsPage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
-  const content = await getHomePageContent(locale);
-  const events = content?.events;
+  const { events } = getHomePageContent();
 
   return (
     <>
       <main className={styles.main}>
         <div className={styles.intro}>
-          <Eyebrow>{events?.eyebrow || 'Community events'}</Eyebrow>
-          <h1 className={styles.title}>{events?.title || "What's happening at ECLA."}</h1>
-          <p className={styles.lead}>
-            {events?.description ||
-              'Our calendar updates as new events are confirmed by the board. RSVPs open one to two weeks before each gathering.'}
-          </p>
+          <Eyebrow>{events.eyebrow}</Eyebrow>
+          <h1 className={styles.title}>{events.title}</h1>
+          <p className={styles.lead}>{events.description}</p>
         </div>
       </main>
       <EventsRail
-        flyers={events?.flyers?.length ? events.flyers : []}
+        flyers={events.flyers}
         title="All upcoming and recurring events"
-        eyebrow={events?.eyebrow || undefined}
-        description={events?.description || undefined}
+        eyebrow={events.eyebrow}
+        description={events.description}
         allEventsHref={`/${locale}/events`}
-        allEventsLabel={events?.allEventsLabel || undefined}
+        allEventsLabel={events.allEventsLabel}
         showHeader={false}
       />
     </>

@@ -1,22 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import type { Value } from '@eclosangeles/content-schema';
 import { ValuesBlock } from './ValuesBlock';
 
-// next/image needs a stub in the test environment — render a plain <img>.
-vi.mock('next/image', () => ({
-  default: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
-}));
-
 const VALUES: ReadonlyArray<Value> = [
-  {
-    order: 1,
-    name: 'Inclusiveness',
-    description: 'Everyone belongs.',
-    imageSrc: '/a.png',
-    imageAlt: 'a',
-  },
-  { order: 2, name: 'Diversity', description: 'Many voices.', imageSrc: '/b.png', imageAlt: 'b' },
+  { order: 1, name: 'Inclusiveness', description: 'Everyone belongs.' },
+  { order: 2, name: 'Diversity', description: 'Many voices.' },
 ];
 
 describe('ValuesBlock', () => {
@@ -34,9 +23,9 @@ describe('ValuesBlock', () => {
     expect(screen.getByText('02')).toBeInTheDocument();
   });
 
-  it('renders the image with its alt text', () => {
-    render(<ValuesBlock values={VALUES} />);
-    expect(screen.getByAltText('a')).toBeInTheDocument();
+  it('renders no images — the cards are text-only', () => {
+    const { container } = render(<ValuesBlock values={VALUES} />);
+    expect(container.querySelector('img')).toBeNull();
   });
 
   it('honors custom eyebrow and title', () => {

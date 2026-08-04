@@ -17,51 +17,63 @@
      Pan-African / Ethiopian palette, modernized.
      ------------------------------------------------------------ */
 
-  /* Forest — primary brand color (drawn from Ethiopian flag green,
-     deepened for accessibility on cream). */
-  --green-50: #eef5ee;
-  --green-100: #d6e6d6;
-  --green-200: #adccad;
-  --green-300: #7ca97d;
-  --green-400: #4f8651;
-  --green-500: #2f6b33; /* primary */
-  --green-600: #245426;
-  --green-700: #1b401d;
-  --green-800: #142e15;
-  --green-900: #0d1f0e;
+  /* ------------------------------------------------------------
+     Ramps are tuned so the marked step is the exact hex from the
+     ECLA Visual Brand Guidelines (2026). Lighter steps mix toward
+     white, darker steps toward black. Change an anchor only if the
+     guidelines change — the semantic aliases below depend on them.
+     ------------------------------------------------------------ */
 
-  /* Saffron — accent (Ethiopian flag yellow, warmed). */
-  --saffron-50: #fdf6e3;
-  --saffron-100: #faecc2;
-  --saffron-200: #f5d984;
-  --saffron-300: #efc44c;
-  --saffron-400: #e6ae21; /* accent */
-  --saffron-500: #c8951a;
-  --saffron-600: #a47a14;
-  --saffron-700: #7c5c0f;
+  /* Green — Pantone 7489 C. Secondary accent: icons, occasional
+     backgrounds. Guidelines cap its presence at ~50%. */
+  --green-50: #edf4e9;
+  --green-100: #e0ecd8;
+  --green-200: #c5dbb6;
+  --green-300: #aacb94;
+  --green-400: #8fba72;
+  --green-500: #74aa50; /* brand Green */
+  --green-600: #5d8840;
+  --green-700: #466630;
+  --green-800: #2e4420;
+  --green-900: #172210;
 
-  /* Cochineal — energy / CTA (Ethiopian flag red, deepened). */
-  --red-50: #fbedea;
-  --red-100: #f5d2cc;
-  --red-200: #eaa499;
-  --red-300: #dd7165;
-  --red-400: #cc4738;
-  --red-500: #b0301f; /* CTA */
-  --red-600: #8c2418;
-  --red-700: #6a1a12;
+  /* Orange Peel — Pantone 2013 C. Main accent: highlights, icons,
+     graphic elements. Guidelines cap its presence at ~50%. */
+  --saffron-50: #ffefd8;
+  --saffron-100: #ffe3ba;
+  --saffron-200: #ffca7c;
+  --saffron-300: #ffb13e;
+  --saffron-400: #ff9800; /* brand Orange Peel */
+  --saffron-500: #d68000;
+  --saffron-600: #ad6700;
+  --saffron-700: #854f00;
 
-  /* Coffee / Earth — warm neutrals (drawn from coffee ceremony,
-     injera, traditional pottery). */
-  --earth-50: #fbf6ee; /* cream — primary background */
-  --earth-100: #f4ecdd;
-  --earth-200: #e8dbc1;
-  --earth-300: #d4c29d;
-  --earth-400: #b59e73;
-  --earth-500: #8e7a56;
-  --earth-600: #6b5c40;
-  --earth-700: #4a3f2c;
-  --earth-800: #2e2719;
-  --earth-900: #1b1410; /* near-black brown — primary ink */
+  /* Red — Pantone 7579 C. The main logo colour, and the brand's key
+     accent: the guidelines ask for it in most compositions, even in
+     small proportions. */
+  --red-50: #fbeae4;
+  --red-100: #f7dacf;
+  --red-200: #f0b9a6;
+  --red-300: #ea997d;
+  --red-400: #e37853;
+  --red-500: #dc582a; /* brand Red */
+  --red-600: #b04622;
+  --red-700: #843519;
+
+  /* Wheat / Lion / Eerie Black — the warm neutral spine.
+     Wheat (Pantone 7506 C) replaces white as the main light surface;
+     Lion (7562 C) is the earthy secondary background; Eerie Black
+     (419 C) is the primary ink and dark surface. */
+  --earth-50: #efdbb2; /* brand Wheat — primary background */
+  --earth-100: #e8cf9e;
+  --earth-200: #ddccad;
+  --earth-300: #cdb387;
+  --earth-400: #bd9b60; /* brand Lion */
+  --earth-500: #9f8251;
+  --earth-600: #816941;
+  --earth-700: #625132;
+  --earth-800: #443823;
+  --earth-900: #1c1b19; /* brand Eerie Black — primary ink */
 
   /* Pure utility */
   --white: #ffffff;
@@ -72,11 +84,14 @@
      Use these in components, not the primitives above.
      ------------------------------------------------------------ */
 
-  /* Backgrounds */
-  --bg-base: var(--earth-50); /* page background — cream */
-  --bg-surface: var(--white); /* cards on cream */
-  --bg-elevated: var(--white); /* popovers, modals */
-  --bg-inverse: var(--green-700); /* dark sections (full-bleed green) */
+  /* Backgrounds.
+     The guidelines call for Wheat "instead of white", so surfaces are
+     wheat tints rather than pure white, and full-bleed dark sections
+     use Eerie Black rather than a dark green. */
+  --bg-base: var(--earth-50); /* page background — Wheat */
+  --bg-surface: #f7ecd6; /* cards — a lighter Wheat, reads above the page */
+  --bg-elevated: #fbf5e8; /* popovers, modals — lighter still */
+  --bg-inverse: var(--earth-900); /* dark sections — Eerie Black */
   --bg-muted: var(--earth-100); /* subtle panel inset */
   --bg-tinted: var(--green-50); /* tinted callout */
   --bg-warning: var(--saffron-50);
@@ -87,18 +102,19 @@
   --fg-2: var(--earth-700); /* secondary — meta, captions */
   --fg-3: var(--earth-500); /* tertiary — subtle labels */
   --fg-muted: var(--earth-400); /* placeholder text */
-  --fg-on-inverse: var(--earth-50); /* text on green */
-  --fg-on-inverse-2: #c8dbc9; /* secondary text on green */
+  --fg-on-inverse: var(--earth-50); /* Wheat on Eerie Black */
+  --fg-on-inverse-2: #cdbb95; /* secondary text on Eerie Black */
   --fg-brand: var(--green-500);
   --fg-accent: var(--saffron-500);
   --fg-cta: var(--red-500);
   --fg-link: var(--green-600);
 
   /* Borders */
-  --border-soft: rgba(74, 63, 44, 0.12); /* hairline, default */
-  --border-strong: rgba(74, 63, 44, 0.24);
-  --border-focus: var(--green-500);
-  --border-on-inverse: rgba(251, 246, 238, 0.18);
+  /* Derived from Eerie Black (28,27,25) and Wheat (239,219,178). */
+  --border-soft: rgba(28, 27, 25, 0.12); /* hairline, default */
+  --border-strong: rgba(28, 27, 25, 0.24);
+  --border-focus: var(--red-500);
+  --border-on-inverse: rgba(239, 219, 178, 0.22);
 
   /* States — buttons, controls */
   --primary-bg: var(--green-500);
@@ -112,11 +128,11 @@
   --cta-fg: var(--earth-50);
 
   --secondary-bg: transparent;
-  --secondary-bg-hover: rgba(47, 107, 51, 0.08);
+  --secondary-bg-hover: rgba(116, 170, 80, 0.08);
   --secondary-fg: var(--green-700);
   --secondary-border: var(--green-500);
 
-  --ghost-bg-hover: rgba(74, 63, 44, 0.06);
+  --ghost-bg-hover: rgba(28, 27, 25, 0.06);
 
   /* ------------------------------------------------------------
      TYPOGRAPHY — Families
@@ -213,11 +229,11 @@
   /* ------------------------------------------------------------
      SHADOWS — Warm-tinted (brown, not gray)
      ------------------------------------------------------------ */
-  --shadow-xs: 0 1px 2px rgba(60, 30, 10, 0.05);
-  --shadow-sm: 0 2px 6px rgba(60, 30, 10, 0.06), 0 1px 2px rgba(60, 30, 10, 0.04);
-  --shadow-md: 0 8px 20px rgba(60, 30, 10, 0.08), 0 2px 6px rgba(60, 30, 10, 0.05);
-  --shadow-lg: 0 20px 48px rgba(60, 30, 10, 0.14), 0 4px 12px rgba(60, 30, 10, 0.06);
-  --shadow-focus: 0 0 0 3px rgba(47, 107, 51, 0.28);
+  --shadow-xs: 0 1px 2px rgba(28, 27, 25, 0.05);
+  --shadow-sm: 0 2px 6px rgba(28, 27, 25, 0.06), 0 1px 2px rgba(28, 27, 25, 0.04);
+  --shadow-md: 0 8px 20px rgba(28, 27, 25, 0.08), 0 2px 6px rgba(28, 27, 25, 0.05);
+  --shadow-lg: 0 20px 48px rgba(28, 27, 25, 0.14), 0 4px 12px rgba(28, 27, 25, 0.06);
+  --shadow-focus: 0 0 0 3px rgba(116, 170, 80, 0.28);
 
   /* ------------------------------------------------------------
      MOTION

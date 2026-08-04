@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import type { CSSProperties } from 'react';
 import type { Program } from '@eclosangeles/content-schema';
 import styles from './ProgramCard.module.css';
 
@@ -14,28 +14,22 @@ const TONE_VAR: Record<Program['tone'], string> = {
 };
 
 export interface ProgramCardProps {
-  program: Pick<Program, 'slug' | 'title' | 'glyph' | 'iconSrc' | 'iconAlt' | 'tone' | 'summary'>;
+  program: Pick<Program, 'slug' | 'title' | 'tone' | 'summary'>;
   linkPrefix?: string;
 }
 
+/**
+ * Text-only program card. Each program is identified by its tone color, carried
+ * by the rule above the title rather than by an icon.
+ */
 export function ProgramCard({ program, linkPrefix = '' }: ProgramCardProps) {
   return (
-    <Link href={`${linkPrefix}/programs/${program.slug}`} className={styles.card}>
-      <div className={styles.iconShell} style={{ background: TONE_VAR[program.tone] }}>
-        {program.iconSrc ? (
-          <Image
-            src={program.iconSrc}
-            alt={program.iconAlt ?? ''}
-            width={54}
-            height={54}
-            className={styles.iconImage}
-          />
-        ) : (
-          <span className={styles.glyph} aria-hidden="true">
-            {program.glyph}
-          </span>
-        )}
-      </div>
+    <Link
+      href={`${linkPrefix}/programs/${program.slug}`}
+      className={styles.card}
+      style={{ '--tone': TONE_VAR[program.tone] } as CSSProperties}
+    >
+      <span className={styles.rule} aria-hidden="true" />
       <h3 className={styles.title}>{program.title}</h3>
       <p className={styles.summary}>{program.summary}</p>
       <span className={styles.cta}>Learn more →</span>

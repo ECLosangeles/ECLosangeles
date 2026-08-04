@@ -12,11 +12,8 @@ const sharedConfig = {
     '@eclosangeles/ui',
     '@eclosangeles/content-schema',
   ],
-  images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.sanity.io' },
-    ],
-  },
+  // All imagery is served from `public/` now that content lives in the repo —
+  // no remote patterns needed.
 };
 
 export default function nextConfig(phase) {

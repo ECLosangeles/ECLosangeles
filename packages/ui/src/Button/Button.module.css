@@ -98,7 +98,7 @@
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.18);
 }
 .goldOutline:hover:not(:disabled) {
-  background: rgba(230, 174, 33, 0.14);
+  background: rgba(255, 152, 0, 0.14);
   border-color: var(--saffron-400);
   color: var(--earth-50);
 }

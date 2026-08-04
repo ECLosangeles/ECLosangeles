@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { Value } from '@eclosangeles/content-schema';
 import { Eyebrow } from '../Eyebrow';
 import styles from './ValuesBlock.module.css';
@@ -24,22 +23,11 @@ export function ValuesBlock({
         <div className={styles.grid}>
           {values.map((v) => (
             <article key={v.order} className={styles.card}>
-              <div className={styles.frame}>
-                {v.imageSrc && (
-                  <Image
-                    src={v.imageSrc}
-                    alt={v.imageAlt ?? ''}
-                    fill
-                    sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className={styles.image}
-                  />
-                )}
-                <span className={styles.number}>{String(v.order).padStart(2, '0')}</span>
-              </div>
-              <div className={styles.content}>
-                <h3 className={styles.name}>{v.name}</h3>
-                <p className={styles.description}>{v.description}</p>
-              </div>
+              <span className={styles.number} aria-hidden="true">
+                {String(v.order).padStart(2, '0')}
+              </span>
+              <h3 className={styles.name}>{v.name}</h3>
+              <p className={styles.description}>{v.description}</p>
             </article>
           ))}
         </div>

@@ -60,8 +60,8 @@
 .chip {
   padding: 12px 18px;
   border-radius: var(--radius-pill);
-  background: rgba(251, 246, 238, 0.08);
-  border: 1px solid rgba(251, 246, 238, 0.18);
+  background: rgba(239, 219, 178, 0.08);
+  border: 1px solid rgba(239, 219, 178, 0.18);
   font-size: 16px;
   font-weight: 500;
   color: var(--earth-50);

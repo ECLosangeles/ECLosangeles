@@ -23,13 +23,7 @@ export interface Program {
   slug: string;
   /** English title, e.g. "Immigration" */
   title: string;
-  /** Single Ge'ez glyph used as the program's icon, e.g. "ሕ" */
-  glyph: string;
-  /** Optional image icon used on program cards */
-  iconSrc?: string;
-  /** Accessible label for the optional image icon */
-  iconAlt?: string;
-  /** Color token used for the glyph badge */
+  /** Color token identifying the program on its card — no icon art is used */
   tone: ProgramTone;
   /** Short description shown on cards (1–2 sentences) */
   summary: string;
@@ -93,10 +87,6 @@ export interface Value {
   order: number;
   /** e.g. "Inclusiveness" */
   name: string;
-  /** Optional image used as the value card background */
-  imageSrc?: string;
-  /** Accessible label for the optional background image */
-  imageAlt?: string;
   /** 1-sentence description */
   description: string;
 }

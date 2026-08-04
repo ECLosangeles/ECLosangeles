@@ -4,18 +4,14 @@ import { notFound } from 'next/navigation';
 import { Button, Eyebrow } from '@eclosangeles/ui';
 import type { Locale } from '@/i18n/routing';
 import { routing } from '@/i18n/routing';
-import { getProgramBySlug, getProgramsContent } from '@/lib/sanity/home';
+import { getProgramBySlug, getProgramsContent } from '@/lib/content';
 import styles from './page.module.css';
 
-export async function generateStaticParams() {
-  const params = await Promise.all(
-    routing.locales.map(async (locale) => {
-      const programs = await getProgramsContent(locale);
-      return (programs?.items ?? []).map((program) => ({ locale, slug: program.slug }));
-    }),
+export function generateStaticParams() {
+  const { items } = getProgramsContent();
+  return routing.locales.flatMap((locale) =>
+    items.map((program) => ({ locale, slug: program.slug })),
   );
-
-  return params.flat();
 }
 
 export async function generateMetadata({
@@ -23,8 +19,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: Locale; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
-  const program = await getProgramBySlug(locale, slug);
+  const { slug } = await params;
+  const program = getProgramBySlug(slug);
   if (!program) return { title: 'Program not found' };
   return {
     title: program.title,
@@ -38,7 +34,7 @@ export default async function ProgramDetailPage({
   params: Promise<{ locale: Locale; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const program = await getProgramBySlug(locale, slug);
+  const program = getProgramBySlug(slug);
   if (!program) notFound();
 
   return (

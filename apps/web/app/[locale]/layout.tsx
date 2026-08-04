@@ -64,7 +64,16 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   const nav: ReadonlyArray<HeaderNavItem> = [
-    { key: 'about', label: tNav('about'), href: `/${locale}/about` },
+    {
+      key: 'about',
+      label: tNav('about'),
+      href: `/${locale}/about`,
+      children: [
+        { label: tNav('annualReports'), href: `/${locale}/about/annual-reports` },
+        { label: tNav('bylaws'), href: `/${locale}/about/bylaws` },
+        { label: tNav('financials'), href: `/${locale}/about/financials` },
+      ],
+    },
     { key: 'programs', label: tNav('programs'), href: `/${locale}/programs` },
     { key: 'events', label: tNav('events'), href: `/${locale}/events` },
     { key: 'stories', label: tNav('stories'), href: `/${locale}/stories` },

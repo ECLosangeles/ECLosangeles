@@ -1,0 +1,98 @@
+[
+  {
+    "name": "traditional-house",
+    "file": "traditional-house.svg",
+    "tileColor": "#db5929",
+    "meaning": "Home, Diaspora"
+  },
+  {
+    "name": "masengo",
+    "file": "masengo.svg",
+    "tileColor": "#ff9900",
+    "meaning": "Tradition, Music, Culture"
+  },
+  {
+    "name": "lion",
+    "file": "lion.svg",
+    "tileColor": "#1c1c19",
+    "meaning": "Strength, Heritage"
+  },
+  {
+    "name": "hand",
+    "file": "hand.svg",
+    "tileColor": "#73ab4f",
+    "meaning": "Youth, Good Energy"
+  },
+  {
+    "name": "adey-flower",
+    "file": "adey-flower.svg",
+    "tileColor": "#bd9c61",
+    "meaning": "New Beginning, New Year, Pride"
+  },
+  {
+    "name": "mesob",
+    "file": "mesob.svg",
+    "tileColor": "#73ab4f",
+    "meaning": "Tradition, Sharing, Community"
+  },
+  {
+    "name": "eyes",
+    "file": "eyes.svg",
+    "tileColor": "#bd9c61",
+    "meaning": "Spirituality, Art and Culture"
+  },
+  {
+    "name": "jebena",
+    "file": "jebena.svg",
+    "tileColor": "#ff9900",
+    "meaning": "Hospitality, Unity, Tradition"
+  },
+  {
+    "name": "injera",
+    "file": "injera.svg",
+    "tileColor": "#ff9900",
+    "meaning": "Family, Community, Sharing"
+  },
+  {
+    "name": "textile-pattern",
+    "file": "textile-pattern.svg",
+    "tileColor": null,
+    "meaning": "Art, Heritage"
+  },
+  {
+    "name": "bird",
+    "file": "bird.svg",
+    "tileColor": "#db5929",
+    "meaning": "Diaspora, Hope, Future"
+  },
+  {
+    "name": "sini-mugs",
+    "file": "sini-mugs.svg",
+    "tileColor": "#73ab4f",
+    "meaning": "Unity, Tradition, Female"
+  },
+  {
+    "name": "amharic",
+    "file": "amharic.svg",
+    "tileColor": "#bd9c61",
+    "meaning": "Language, Heritage, Community"
+  },
+  {
+    "name": "shield",
+    "file": "shield.svg",
+    "tileColor": "#db5929",
+    "meaning": "Strength, Resilience, Protection"
+  },
+  {
+    "name": "street-sight",
+    "file": "street-sight.svg",
+    "tileColor": "#1c1c19",
+    "meaning": "Diaspora, Community"
+  },
+  {
+    "name": "ornament",
+    "file": "ornament.svg",
+    "tileColor": "#bd9c61",
+    "meaning": "Art, Culture"
+  }
+]

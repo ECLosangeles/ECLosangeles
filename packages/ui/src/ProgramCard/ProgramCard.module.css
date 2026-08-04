@@ -1,67 +1,65 @@
 .card {
+  position: relative;
   text-align: left;
   text-decoration: none;
   cursor: pointer;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(251, 246, 238, 0.74)), var(--bg-surface);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(239, 219, 178, 0.74)), var(--bg-surface);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition:
     box-shadow var(--duration-base) var(--ease-standard),
-    transform var(--duration-base) var(--ease-standard);
-  padding: 22px;
+    transform var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+  padding: 24px 22px 22px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   color: var(--fg-1);
 }
 
 .card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--tone) 40%, transparent);
   text-decoration: none;
 }
 
-.iconShell {
+/* The program's tone color, carried typographically instead of by an icon. */
+.rule {
+  display: block;
+  width: 40px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--tone);
+  margin-bottom: 4px;
+  transition: width var(--duration-base) var(--ease-standard);
+}
+
+.card:hover .rule {
   width: 64px;
-  height: 64px;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 0 1px rgba(251, 246, 238, 0.35);
-}
-
-.iconImage {
-  width: 54px;
-  height: 54px;
-  object-fit: contain;
-}
-
-.glyph {
-  font-family: var(--font-amharic);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--earth-50);
 }
 
 .title {
-  font-size: 19px;
-  line-height: 26px;
+  font-size: 22px;
+  line-height: 29px;
   margin: 0;
 }
 
 .summary {
   font-size: 14px;
-  line-height: 21px;
+  line-height: 22px;
   color: var(--fg-2);
   margin: 0;
 }
 
+/* Deliberately not the tone color — several tones are too light to carry
+   13px text on the cream card at an accessible contrast. */
 .cta {
   margin-top: auto;
+  padding-top: 6px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--green-700);
 }

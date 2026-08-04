@@ -11,7 +11,7 @@
 }
 
 .primary {
-  background: var(--green-700);
+  background: var(--bg-inverse);
   color: var(--earth-50);
   border: none;
   box-shadow: var(--shadow-md);

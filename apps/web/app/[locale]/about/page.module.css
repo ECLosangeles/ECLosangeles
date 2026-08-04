@@ -27,3 +27,24 @@
   color: var(--fg-2);
   margin: 0;
 }
+
+.statements {
+  max-width: 880px;
+  margin: 0 auto var(--space-8);
+  display: grid;
+  gap: var(--space-7);
+}
+
+.statement {
+  display: grid;
+  gap: 12px;
+}
+
+/* Official statements are reproduced verbatim — give them room to breathe
+   rather than truncating or clamping the text. */
+.statementBody {
+  font-size: 19px;
+  line-height: 32px;
+  color: var(--fg-1);
+  margin: 0;
+}

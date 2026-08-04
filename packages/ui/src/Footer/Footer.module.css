@@ -14,7 +14,7 @@
   grid-template-columns: 1.4fr 1fr 1fr 1fr;
   gap: var(--space-7);
   padding-bottom: var(--space-7);
-  border-bottom: 1px solid rgba(251, 246, 238, 0.12);
+  border-bottom: 1px solid rgba(239, 219, 178, 0.12);
 }
 
 @media (max-width: 880px) {
@@ -41,17 +41,16 @@
   margin-bottom: var(--space-4);
 }
 
+/* Official logotype artwork (negative treatment) — see Header.module.css. */
 .wordmark {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--earth-50);
+  height: 28px;
+  width: auto;
 }
 
 .address {
   font-size: 14px;
   line-height: 22px;
-  color: rgba(251, 246, 238, 0.7);
+  color: rgba(239, 219, 178, 0.7);
   max-width: 320px;
   margin: 0;
 }
@@ -85,7 +84,7 @@
 }
 
 .link {
-  color: rgba(251, 246, 238, 0.85);
+  color: rgba(239, 219, 178, 0.85);
   text-decoration: none;
   font-size: 14px;
   transition: color var(--duration-fast) var(--ease-standard);
@@ -102,7 +101,7 @@
   align-items: center;
   padding-top: var(--space-5);
   font-size: 13px;
-  color: rgba(251, 246, 238, 0.55);
+  color: rgba(239, 219, 178, 0.55);
   flex-wrap: wrap;
   gap: 12px;
 }

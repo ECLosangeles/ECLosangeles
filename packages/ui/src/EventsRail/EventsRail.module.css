@@ -109,7 +109,7 @@
 .photoOverlay {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(180deg, rgba(251, 246, 238, 0.05), rgba(13, 31, 14, 0.35));
+  background-image: linear-gradient(180deg, rgba(239, 219, 178, 0.05), rgba(28, 27, 25, 0.35));
 }
 
 .photoGlyph {

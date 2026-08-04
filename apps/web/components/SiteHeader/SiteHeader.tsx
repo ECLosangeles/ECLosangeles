@@ -3,7 +3,6 @@
 import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Header, type HeaderNavItem, type NavKey } from '@eclosangeles/ui';
-import { LanguageToggle } from '@/components/LanguageToggle';
 
 const NAV_SEGMENTS = new Set<NavKey>(['about', 'programs', 'events', 'stories', 'membership']);
 
@@ -25,15 +24,12 @@ export function SiteHeader({ nav, homeHref }: SiteHeaderProps) {
     setMobileNavOpen(false);
   }, [pathname]);
 
-  const actions = <LanguageToggle />;
-
+  // No language toggle while the site is English-only — see i18n/routing.ts.
   return (
     <Header
       nav={nav}
       homeHref={homeHref}
       active={active}
-      actions={actions}
-      mobileActions={actions}
       mobileNavOpen={mobileNavOpen}
       onMobileNavToggle={() => setMobileNavOpen((isOpen) => !isOpen)}
       onMobileNavigate={() => setMobileNavOpen(false)}
