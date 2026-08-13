@@ -237,25 +237,20 @@ async function buildHomePage() {
 }
 
 /**
- * Documents left over from the bilingual setup: the per-language home pages and
- * the metadata document that linked them. They are removed after the new
- * single `homePage` document is written, so a re-run of this script leaves the
- * dataset clean rather than accumulating orphans the Studio no longer lists.
+ * This script deliberately does NOT delete the documents left over from the
+ * bilingual setup (`homePage-en`, `homePage-am`, and the Studio-generated
+ * Amharic page). They hold real translation work, and an earlier version of
+ * this script removed them sight-unseen.
+ *
+ * They are harmless: the website loads the fixed `homePage` id rather than
+ * `*[_type == "homePage"][0]`, so a leftover document can never be served by
+ * accident. A snapshot lives in `legacy/` if the dataset is ever tidied.
  */
-const LEGACY_DOCUMENT_IDS = ['homePage-en', 'homePage-am', 'homePage-translations']
-
 async function seed() {
   const document = await buildHomePage()
 
   await client.createOrReplace(document)
   console.log(`Seeded ${document._id}`)
-
-  for (const id of LEGACY_DOCUMENT_IDS) {
-    await client.delete(id).catch(() => {
-      // Already gone — nothing to clean up.
-    })
-  }
-  console.log('Removed legacy bilingual home page documents')
 }
 
 seed().catch((error) => {

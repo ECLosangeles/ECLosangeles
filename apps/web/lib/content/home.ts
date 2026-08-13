@@ -1,16 +1,22 @@
 import type { Program, Value } from '@eclosangeles/content-schema';
 import { PROGRAMS, findProgramBySlug } from './programs';
-import { MISSION_STATEMENT, VISION_STATEMENT } from './statements';
-import { VALUES } from './values';
-import { VISION_ITEMS } from './vision';
+import { HOME_PAGE_QUERY } from '../sanity/queries';
+import type { HOME_PAGE_QUERY_RESULT } from '../sanity/sanity.types';
+import { sanityFetch } from '../sanity/live';
 
 /**
- * The home page content, held in the repo.
+ * The home page content, read from Sanity.
  *
- * This replaces the former Sanity-backed data layer: the copy below was ported
- * verbatim out of the `homePage-en` document before the CMS was detached, so
- * nothing that was live has been lost. Editing the site now means editing this
- * file — there is no external content source to keep in sync.
+ * Every string here reaches the page carrying invisible stega metadata, which
+ * is what lets the Studio's Presentation tool map rendered text back to the
+ * field that produced it. Do not trim, slice, or re-case these values before
+ * rendering — that corrupts the metadata and the click-to-edit overlay stops
+ * finding the field.
+ *
+ * Programs are the exception: they still come from `programs.ts` because the
+ * program detail pages need fields (body, documents, walk-in clinic) that have
+ * no home in the CMS yet. Until a `program` document type exists, keeping one
+ * source avoids the home grid and the detail pages disagreeing.
  */
 export interface HomePageContent {
   hero: {
@@ -66,98 +72,136 @@ export interface HomePageContent {
   };
 }
 
-export const HOME_PAGE: HomePageContent = {
-  hero: {
-    tagline: 'Serving Greater LA since 2019',
-    title: 'A trusted neighbor for Ethiopian families across',
-    titleEmphasis: 'Greater Los Angeles',
-    lead: "An inclusive, nonpolitical, nonreligious civic organization — supporting our community's social, economic, educational, health, and cultural needs.",
-    welcomeChip: 'Welcome',
-    imageSrc: '/brand/hero.png',
-    imageAlt: 'Ethiopian Community Los Angeles members gathered together',
-    ctas: [
-      { label: 'Donate', href: '/donate' },
-      { label: 'Become a member', href: '/membership' },
-      { label: 'Volunteer', href: '/about' },
-      { label: 'Get services →', href: '/programs' },
-    ],
-  },
-  statements: [
-    {
-      eyebrow: 'Our mission',
-      body: MISSION_STATEMENT,
-      tagline: 'Inclusive · Nonpolitical · Nonreligious',
-    },
-    {
-      eyebrow: 'Our vision',
-      body: VISION_STATEMENT,
-      tagline: 'Integrated · United · Equally addressed',
-    },
-  ],
-  programs: {
-    eyebrow: 'What we do',
-    title: 'Programs that meet you where you are.',
-    items: PROGRAMS,
-  },
-  values: {
-    eyebrow: 'What we stand for',
-    title: 'Eight values, lived — not laminated.',
-    items: VALUES,
-  },
-  events: {
-    eyebrow: 'Community events',
-    title: "What's happening at ECLA",
-    description:
-      'Coffee mornings, book signings, festivals, conferences, galas — community life happens in person.',
-    allEventsLabel: 'All events →',
-    href: '/events',
-    flyers: [
-      { imageSrc: '/brand/flyers/flyer-1.png' },
-      { imageSrc: '/brand/flyers/flyer-2.png' },
-      { imageSrc: '/brand/flyers/flyer-3.png' },
-      { imageSrc: '/brand/flyers/flyer-4.png' },
-      { imageSrc: '/brand/flyers/flyer-5.png' },
-    ],
-  },
-  knowYourRights: {
-    videos: [
-      {
-        title: 'Know Your Rights (Tigrinya) | መሰላትካ ፍለጥ',
-        url: 'https://www.youtube.com/watch?v=sjbXyPY6cuo',
-      },
-      {
-        title: 'Know Your Rights (Afaan Oromo) | Mirga Kee Beeki',
-        url: 'https://www.youtube.com/watch?v=7Cf1gUC6udo',
-      },
-      {
-        title: 'Know Your Rights (Amharic) | መብትህን እወቅ',
-        url: 'https://www.youtube.com/watch?v=56lxEiqtjMU',
-      },
-    ],
-  },
-  vision: {
-    eyebrow: 'Our vision',
-    title: 'Integration, unity and equality.',
-    description: VISION_STATEMENT,
-    ctaLabel: 'Get involved →',
-    href: '/membership',
-    items: VISION_ITEMS,
-  },
-  membership: {
-    eyebrow: 'Membership',
-    title: 'Join us. The community runs on its members.',
-    description:
-      'Members vote on board elections, get a say in priorities, and help fund every program ECLA runs.',
-    href: '/membership',
-  },
-};
+/** Every CMS field is nullable, and the components want strings. */
+const str = (value: string | null | undefined): string => value ?? '';
 
-export function getHomePageContent(): HomePageContent {
-  return HOME_PAGE;
+type CmsHomePage = NonNullable<HOME_PAGE_QUERY_RESULT>;
+
+/**
+ * Builds the mission/vision slider.
+ *
+ * Reads `visionStatement`, not `vision` — the latter is the roadmap strip
+ * further down the page and holds completely different copy. Conflating the two
+ * silently drops this slide.
+ *
+ * A statement with no body is skipped: an empty slide is worse than one fewer.
+ */
+function toStatements(page: CmsHomePage): HomePageContent['statements'] {
+  return [
+    {
+      eyebrow: str(page.mission?.eyebrow),
+      body: str(page.mission?.statement),
+      tagline: str(page.mission?.tagline),
+    },
+    {
+      eyebrow: str(page.visionStatement?.eyebrow),
+      body: str(page.visionStatement?.statement),
+      tagline: str(page.visionStatement?.tagline),
+    },
+  ].filter((statement) => statement.body !== '');
 }
 
-export function getProgramsContent(): HomePageContent['programs'] {
-  return HOME_PAGE.programs;
+function toValues(page: CmsHomePage): ReadonlyArray<Value> {
+  const items = page.values?.items ?? [];
+
+  return items
+    .filter((item) => item.name)
+    .map((item, index) => ({
+      // `order` drives the 01..08 numbering; fall back to document order.
+      order: item.order ?? index + 1,
+      name: str(item.name),
+      description: str(item.description),
+    }));
+}
+
+function toFlyers(page: CmsHomePage): HomePageContent['events']['flyers'] {
+  const flyers = page.events?.flyers ?? [];
+
+  return flyers
+    .filter((flyer) => flyer.image?.url)
+    .map((flyer) => ({
+      imageSrc: flyer.image!.url!,
+      imageAlt: str(flyer.image?.alt),
+      ...(flyer.href ? { href: flyer.href } : {}),
+    }));
+}
+
+function toHomePageContent(page: CmsHomePage): HomePageContent {
+  return {
+    hero: {
+      tagline: str(page.hero?.tagline),
+      title: str(page.hero?.title),
+      titleEmphasis: str(page.hero?.titleEmphasis),
+      lead: str(page.hero?.lead),
+      welcomeChip: str(page.hero?.welcomeChip),
+      imageSrc: str(page.hero?.image?.url),
+      imageAlt: str(page.hero?.image?.alt),
+      ctas: (page.hero?.ctas ?? [])
+        .filter((cta) => cta.label && cta.href)
+        .map((cta) => ({ label: cta.label!, href: cta.href! })),
+    },
+    statements: toStatements(page),
+    programs: {
+      // Heading is editable; the cards below it are not, yet.
+      eyebrow: str(page.programs?.eyebrow),
+      title: str(page.programs?.title),
+      items: PROGRAMS,
+    },
+    values: {
+      eyebrow: str(page.values?.eyebrow),
+      title: str(page.values?.title),
+      items: toValues(page),
+    },
+    events: {
+      eyebrow: str(page.events?.eyebrow),
+      title: str(page.events?.title),
+      description: str(page.events?.description),
+      allEventsLabel: str(page.events?.allEventsLabel),
+      href: str(page.events?.href),
+      flyers: toFlyers(page),
+    },
+    knowYourRights: {
+      videos: (page.knowYourRights?.videos ?? [])
+        .filter((video) => video.title && video.url)
+        .map((video) => ({ title: video.title!, url: video.url! })),
+    },
+    vision: {
+      eyebrow: str(page.vision?.eyebrow),
+      title: str(page.vision?.title),
+      description: str(page.vision?.description),
+      ctaLabel: str(page.vision?.ctaLabel),
+      href: str(page.vision?.href),
+      items: page.vision?.items ?? [],
+    },
+    membership: {
+      eyebrow: str(page.membership?.eyebrow),
+      title: str(page.membership?.title),
+      description: str(page.membership?.description),
+      href: str(page.membership?.href),
+    },
+  };
+}
+
+/**
+ * Loads the home page. Throws if the document is missing, rather than rendering
+ * a silently empty page — a blank home page in production is worse than a loud
+ * build failure. Run `npm run migrate:homepage` in the Studio if this fires.
+ */
+export async function getHomePageContent(): Promise<HomePageContent> {
+  const { data } = await sanityFetch({ query: HOME_PAGE_QUERY });
+
+  if (!data) {
+    throw new Error(
+      'No "homePage" document found in Sanity. Run `npm run migrate:homepage` in studio-eclosangeles.',
+    );
+  }
+
+  return toHomePageContent(data);
+}
+
+export async function getProgramsContent(): Promise<HomePageContent['programs']> {
+  const content = await getHomePageContent();
+  return content.programs;
 }
 
 export function getProgramBySlug(slug: string): Program | undefined {

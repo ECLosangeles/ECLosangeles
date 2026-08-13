@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Button, DocumentEmbed, Eyebrow, VideoEmbed } from '@eclosangeles/ui';
-import { getProgramBySlug, getProgramsContent } from '@/lib/content';
+import { PROGRAMS, getProgramBySlug } from '@/lib/content';
 import styles from './page.module.css';
 
+// Read straight from the repo rather than through the home page content: these
+// routes are built from data that lives in code, so there is nothing to fetch.
 export function generateStaticParams() {
-  const { items } = getProgramsContent();
-  return items.map((program) => ({ slug: program.slug }));
+  return PROGRAMS.map((program) => ({ slug: program.slug }));
 }
 
 export async function generateMetadata({

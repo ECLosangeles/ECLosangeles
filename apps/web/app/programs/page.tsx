@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     'Four program areas serving Ethiopian families across Greater Los Angeles — immigration services, older adult services, mental health services, and workforce development.',
 };
 
-export default function ProgramsIndexPage() {
-  const programs = getProgramsContent();
+export default async function ProgramsIndexPage() {
+  const programs = await getProgramsContent();
 
   return (
     <main className={styles.main}>

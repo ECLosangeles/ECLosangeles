@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     'Coffee mornings, book signings, festivals, conferences, galas — community life happens in person.',
 };
 
-export default function EventsPage() {
-  const { events } = getHomePageContent();
+export default async function EventsPage() {
+  const { events } = await getHomePageContent();
 
   return (
     <>

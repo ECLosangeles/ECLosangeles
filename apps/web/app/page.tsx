@@ -10,9 +10,9 @@ import {
 } from '@eclosangeles/ui';
 import { getHomePageContent } from '@/lib/content';
 
-export default function HomePage() {
+export default async function HomePage() {
   const { hero, statements, programs, values, events, knowYourRights, vision, membership } =
-    getHomePageContent();
+    await getHomePageContent();
 
   return (
     <>

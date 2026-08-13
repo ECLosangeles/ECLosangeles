@@ -97,11 +97,35 @@ export const homePage = defineType({
     defineField({
       name: 'mission',
       title: 'Mission',
+      description:
+        'Shown in the rotating statement block near the top of the home page, alongside the vision.',
       type: 'object',
       fields: [
         defineField({name: 'eyebrow', title: 'Eyebrow', type: 'string'}),
         defineField({name: 'statement', title: 'Mission Statement', type: 'text', rows: 4}),
-        defineField({name: 'tagline', title: 'Tagline', type: 'string'}),
+        defineField({
+          name: 'tagline',
+          title: 'Tagline',
+          type: 'string',
+          description: 'Short summary shown under the statement, e.g. "Inclusive · Nonpolitical".',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'visionStatement',
+      title: 'Vision',
+      description:
+        'The formal vision statement. Shown in the rotating statement block next to the mission — not to be confused with the "Vision Section" lower down, which is the roadmap strip.',
+      type: 'object',
+      fields: [
+        defineField({name: 'eyebrow', title: 'Eyebrow', type: 'string'}),
+        defineField({name: 'statement', title: 'Vision Statement', type: 'text', rows: 4}),
+        defineField({
+          name: 'tagline',
+          title: 'Tagline',
+          type: 'string',
+          description: 'Short summary shown under the statement, e.g. "Integrated · United".',
+        }),
       ],
     }),
     defineField({

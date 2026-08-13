@@ -14,7 +14,9 @@
     "typegen": "sanity schema extract --path=schema.json && sanity typegen generate",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "migrate:homepage": "sanity exec scripts/migrateHomePageId.ts --with-user-token",
     "seed": "sanity exec scripts/seedHomePage.ts --with-user-token",
+    "seed:vision": "sanity exec scripts/seedVisionStatement.ts --with-user-token",
     "seed:programs": "sanity exec scripts/seedHomePagePrograms.ts --with-user-token"
   },
   "keywords": [
