@@ -2,9 +2,12 @@ import { Fraunces, Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 import { Footer, type HeaderNavItem } from '@eclosangeles/ui';
+import { Suspense } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
+import { VisualEditingBridge } from '@/components/VisualEditingBridge';
 import { EVENT_GALLERIES, PROGRAMS } from '@/lib/content';
 import { FOOTER_COPY, NAV_COPY } from '@/lib/site-copy';
+import { SanityLive } from '@/lib/sanity/live';
 import './globals.css';
 
 const fraunces = Fraunces({
@@ -94,6 +97,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           welcomeText={`እንኳን ደና መጣችሁ · ${FOOTER_COPY.welcome}`}
           rightsTagline={FOOTER_COPY.rights}
         />
+        {/* Keeps content read through `sanityFetch` up to date, and streams
+            edits into the Presentation tool's preview as they are typed. */}
+        <SanityLive />
+        <Suspense fallback={null}>
+          <VisualEditingBridge />
+        </Suspense>
       </body>
     </html>
   );

@@ -22,6 +22,34 @@ This is where editors manage the content the public website (`apps/web`) renders
 | `npm run lint`      | Lint the Studio.                                                  |
 | `npm run seed`      | Seed the Home Page documents (uploads brand images). See below.   |
 
+## Visual editing (Presentation tool)
+
+The Studio's **Presentation** tool shows the live website beside the editor.
+Clicking any text or image on the page opens the field that produced it, and
+edits appear in the preview as they are typed.
+
+To run the whole loop locally you need three things:
+
+1. **The website running.** From the repo root: `pnpm dev` (serves
+   <http://localhost:3000>).
+2. **A read token in the website.** Copy `apps/web/.env.example` to
+   `apps/web/.env.local` and fill in `SANITY_API_READ_TOKEN` with a **Viewer**
+   token from
+   <https://sanity.io/manage/project/b59x306d/api#tokens>. Without it the preview
+   shows published content only — drafts stay invisible.
+3. **The Studio pointed at that site.** `npm run dev` here defaults to
+   previewing `http://localhost:3000`. Override with
+   `SANITY_STUDIO_PREVIEW_ORIGIN` if the site runs elsewhere.
+
+Then open the Studio and pick **Presentation** from the toolbar.
+
+> Only content the page actually reads through `sanityFetch` is clickable.
+> Anything still hard-coded in `apps/web/lib/content/` renders normally but has
+> no overlay, since there is no field behind it to open.
+
+For the deployed Studio, the preview origin comes from the `SITE_ORIGIN`
+repository variable — see [Deployment](#deployment).
+
 ## Deployment
 
 The Studio deploys separately from the public Next.js site. GitHub Actions runs
@@ -54,14 +82,17 @@ Do not commit the token to the repo.
 
 Content types live in [`schemaTypes/`](./schemaTypes). Today there is one:
 
-- **Home Page** (`homePage`) — a **singleton per locale**. There is exactly one
-  English (`homePage-en`) and one Amharic (`homePage-am`) document. The Studio
-  enforces this: the desk structure in [`structure.ts`](./structure.ts) opens
-  those fixed documents directly, and [`sanity.config.ts`](./sanity.config.ts)
-  strips the create/duplicate/delete actions for singleton types. **Do not** turn
-  `homePage` into a freely-creatable type — the website queries
-  `*[_type == "homePage" && locale == $locale][0]` and would pick a random
-  duplicate.
+- **Home Page** (`homePage`) — a **singleton**: exactly one document, with the
+  fixed id `homePage`. The Studio enforces this: the desk structure in
+  [`structure.ts`](./structure.ts) opens that document directly, and
+  [`sanity.config.ts`](./sanity.config.ts) strips the create/duplicate/delete
+  actions for singleton types. **Do not** turn `homePage` into a
+  freely-creatable type — the website queries `*[_type == "homePage"][0]` and
+  would pick a random duplicate.
+
+  > The site was bilingual until it moved to English-only. The old
+  > `homePage-en` / `homePage-am` documents and the Document
+  > Internationalization plugin are gone; the seed script deletes the leftovers.
 
 When you add a new **non-singleton** type (e.g. `program`, `event`), it appears
 in the Studio automatically. Add it to `SINGLETON_TYPES` in `structure.ts` only
@@ -83,10 +114,12 @@ This extracts the schema to `schema.json` (gitignored) and writes
 
 ## Seeding
 
-[`scripts/seedHomePage.ts`](./scripts/seedHomePage.ts) creates/replaces the
-English and Amharic Home Page documents and uploads the brand images from
-`apps/web/public`. It uses `createOrReplace`, so running it again **overwrites**
-those documents — don't run it against content editors have changed by hand.
+[`scripts/seedHomePage.ts`](./scripts/seedHomePage.ts) creates/replaces the Home
+Page document and uploads the brand images from `apps/web/public`. It also
+deletes the legacy bilingual documents (`homePage-en`, `homePage-am`,
+`homePage-translations`). It uses `createOrReplace`, so running it again
+**overwrites** the document — don't run it against content editors have changed
+by hand.
 
 ```bash
 npm run seed   # runs `sanity exec ... --with-user-token`

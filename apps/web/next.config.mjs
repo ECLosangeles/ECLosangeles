@@ -9,8 +9,11 @@ const sharedConfig = {
     '@eclosangeles/ui',
     '@eclosangeles/content-schema',
   ],
-  // Imagery is served from `public/` while content lives in the repo. Phase 1 of
-  // the Sanity re-integration adds `cdn.sanity.io` here.
+  images: {
+    // Editor-uploaded imagery is served from Sanity's asset CDN. Brand assets
+    // (logos, icons, motifs) stay in `public/` — they are design, not content.
+    remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
+  },
 };
 
 export default function nextConfig(phase) {

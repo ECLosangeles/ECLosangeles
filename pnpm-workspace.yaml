@@ -1,3 +1,16 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+# `@hookform/resolvers` imports `zod` without declaring it as a dependency, so
+# pnpm resolves that bare import through its fallback hoist directory. Once
+# next-sanity pulled zod 4 into the tree, that directory started serving v4
+# types to a v3 schema and `zodResolver()` stopped type-checking.
+#
+# Declaring the dependency explicitly pins it to the same zod the app uses, so
+# resolution no longer depends on which version happens to win hoisting.
+# Remove this if the app moves to zod 4 and @hookform/resolvers 5.
+packageExtensions:
+  "@hookform/resolvers":
+    dependencies:
+      zod: "^3.25.76"

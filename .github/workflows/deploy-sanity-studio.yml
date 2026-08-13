@@ -25,6 +25,12 @@ jobs:
         working-directory: studio-eclosangeles
     env:
       SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+      # Origin the Presentation tool loads in its preview pane. Set the
+      # SITE_ORIGIN repository variable to the deployed website's URL
+      # (Settings → Secrets and variables → Actions → Variables). Without it the
+      # deployed Studio falls back to http://localhost:3000, which only previews
+      # for editors running the site locally.
+      SANITY_STUDIO_PREVIEW_ORIGIN: ${{ vars.SITE_ORIGIN }}
 
     steps:
       - name: Checkout
