@@ -78,9 +78,50 @@ SANITY_AUTH_TOKEN
 Create the token from Sanity with deploy/write access for project `b59x306d`.
 Do not commit the token to the repo.
 
+## Connecting the Studio to the live site
+
+Four pieces of configuration live outside this repo. Miss one and the symptom
+is usually silent — the site builds and serves stale or empty content rather
+than failing.
+
+**1. Sanity CORS origins** — <https://sanity.io/manage/project/b59x306d/api#cors-origins>
+
+Add the website's origin (e.g. `https://ec-losangeles-web.vercel.app`) with
+**Allow credentials** ticked. Without it the browser half of visual editing and
+live updates is blocked; server-rendered pages still work, which is what makes
+this one confusing to diagnose.
+
+**2. Vercel environment variables** — Project → Settings → Environment Variables
+
+| Variable                        | Value                                                 |
+| ------------------------------- | ----------------------------------------------------- |
+| `SANITY_API_READ_TOKEN`         | Viewer token. Needed for draft previews.              |
+| `SANITY_REVALIDATE_SECRET`      | Any long random string. Must match the webhook below. |
+| `NEXT_PUBLIC_SANITY_STUDIO_URL` | `https://eclosangeles.sanity.studio`                  |
+
+The project id, dataset and API version have defaults in the code, so they only
+need setting to point at something else.
+
+**3. Revalidation webhook** — <https://sanity.io/manage/project/b59x306d/api#webhooks>
+
+Without this, published edits do not appear on the live site until the next
+deploy: pages are statically generated and cached indefinitely.
+
+| Field   | Value                                                    |
+| ------- | -------------------------------------------------------- |
+| URL     | `https://<site>/api/revalidate`                          |
+| Dataset | `production`                                             |
+| Trigger | Create, Update, Delete                                   |
+| Filter  | `_type in ["homePage","program","eventGallery","story"]` |
+| Secret  | the same string as `SANITY_REVALIDATE_SECRET`            |
+
+**4. `SITE_ORIGIN` repository variable** — GitHub → Settings → Secrets and
+variables → Actions → Variables. Set it to the deployed site's URL so the
+deployed Studio previews production rather than `localhost:3000`.
+
 ## Content model
 
-Content types live in [`schemaTypes/`](./schemaTypes). Today there is one:
+Content types live in [`schemaTypes/`](./schemaTypes):
 
 - **Home Page** (`homePage`) — a **singleton**: exactly one document, with the
   fixed id `homePage`. The Studio enforces this: the desk structure in
@@ -94,9 +135,20 @@ Content types live in [`schemaTypes/`](./schemaTypes). Today there is one:
   > `homePage-en` / `homePage-am` documents and the Document
   > Internationalization plugin are gone; the seed script deletes the leftovers.
 
-When you add a new **non-singleton** type (e.g. `program`, `event`), it appears
-in the Studio automatically. Add it to `SINGLETON_TYPES` in `structure.ts` only
-if it should be a singleton.
+- **Program** (`program`) — one per program area. Drives the cards on the home
+  page and `/programs`, its own detail page, and the navigation menu.
+- **Event Gallery** (`eventGallery`) — photos from a past event.
+- **Story** (`story`) — a community story shown on `/stories`.
+
+New types appear in the Studio automatically unless they are given their own
+section in [`structure.ts`](./structure.ts). Add to `SINGLETON_TYPES` there only
+if the type should be a singleton.
+
+> **Document ids must not contain a dot.** A dot makes the id a _path_, and
+> path-prefixed documents are private in the same way `drafts.` documents are —
+> invisible to the unauthenticated reads the website uses. A document with an id
+> like `program.immigration` looks completely normal in the Studio and simply
+> never appears on the site. Use hyphens.
 
 ## Type generation (keeping the website in sync)
 
