@@ -11,6 +11,8 @@ export default defineCliConfig({
      * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
      */
     autoUpdates: true,
+    /** Identifies the deployed Studio, so deploys never prompt for it. */
+    appId: 'ck9jk7xa9bda3ds027efi1w4',
   },
   /**
    * TypeGen reads the extracted schema + the website's GROQ queries and emits

@@ -37,9 +37,17 @@ To run the whole loop locally you need three things:
    token from
    <https://sanity.io/manage/project/b59x306d/api#tokens>. Without it the preview
    shows published content only — drafts stay invisible.
-3. **The Studio pointed at that site.** `npm run dev` here defaults to
-   previewing `http://localhost:3000`. Override with
-   `SANITY_STUDIO_PREVIEW_ORIGIN` if the site runs elsewhere.
+3. **The Studio pointed at that site.** The preview origin defaults to the
+   **live site**, so create `studio-eclosangeles/.env.development.local`:
+
+   ```bash
+   SANITY_STUDIO_PREVIEW_ORIGIN=http://localhost:3000
+   ```
+
+   > Use `.env.development.local`, **not** `.env.local`. Sanity follows Vite's
+   > convention, where `.env.local` is loaded in every mode including production
+   > builds — so a localhost value there gets baked into `npm run deploy`, and
+   > the deployed Studio shows editors "Unable to connect".
 
 Then open the Studio and pick **Presentation** from the toolbar.
 

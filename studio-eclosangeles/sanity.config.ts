@@ -9,12 +9,17 @@ import {SINGLETON_TYPES, structure} from './structure'
 /**
  * The website the Presentation tool renders in its preview pane.
  *
- * Point this at a local dev server while working on the site; it defaults to
- * production so the deployed Studio previews the live site. Set it with
- * SANITY_STUDIO_PREVIEW_ORIGIN — the SANITY_STUDIO_ prefix is what makes an env
- * var visible to the Studio bundle.
+ * Defaults to the live site, deliberately: a deployed Studio that falls back to
+ * localhost shows editors nothing but "Unable to connect". Developers override
+ * it locally instead, which fails safely — the worst case is previewing
+ * production from a dev machine.
+ *
+ * Set SANITY_STUDIO_PREVIEW_ORIGIN=http://localhost:3000 in
+ * `studio-eclosangeles/.env.local` when working against a local site. The
+ * SANITY_STUDIO_ prefix is what makes an env var visible to the Studio bundle.
  */
-const previewOrigin = process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:3000'
+const previewOrigin =
+  process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'https://ec-losangeles-web.vercel.app'
 
 // Singletons shouldn't be duplicated, deleted, or unpublished from the Studio.
 // We strip those actions for singleton types so editors can only edit/publish
