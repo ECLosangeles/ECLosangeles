@@ -56,10 +56,8 @@ async function seed() {
     items,
   }
 
-  for (const locale of ['en', 'am']) {
-    await client.patch(`homePage-${locale}`).set({programs}).commit()
-    console.log(`Seeded homePage-${locale}.programs`)
-  }
+  await client.patch('homePage').set({programs}).commit()
+  console.log('Seeded homePage.programs')
 }
 
 seed().catch((error) => {

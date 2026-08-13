@@ -10,8 +10,7 @@ export const metadata: Metadata = {
     'Stories from ECLA volunteers, members, and the community we serve. Names and details shared with consent.',
 };
 
-export default async function StoriesPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default function StoriesPage() {
   return (
     <main className={styles.main}>
       <div className={styles.intro}>
@@ -33,7 +32,7 @@ export default async function StoriesPage({ params }: { params: Promise<{ locale
               })}
             </time>
             <h2 className={styles.cardTitle}>
-              <Link href={`/${locale}/stories/${story.slug}`} className={styles.cardLink}>
+              <Link href={`/stories/${story.slug}`} className={styles.cardLink}>
                 {story.title}
               </Link>
             </h2>

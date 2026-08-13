@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { EventsRail, Eyebrow } from '@eclosangeles/ui';
-import type { Locale } from '@/i18n/routing';
 import { getHomePageContent } from '@/lib/content';
 import styles from './page.module.css';
 
@@ -10,8 +9,7 @@ export const metadata: Metadata = {
     'Coffee mornings, book signings, festivals, conferences, galas — community life happens in person.',
 };
 
-export default async function EventsPage({ params }: { params: Promise<{ locale: Locale }> }) {
-  const { locale } = await params;
+export default function EventsPage() {
   const { events } = getHomePageContent();
 
   return (
@@ -28,7 +26,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
         title="All upcoming and recurring events"
         eyebrow={events.eyebrow}
         description={events.description}
-        allEventsHref={`/${locale}/events`}
+        allEventsHref="/events"
         allEventsLabel={events.allEventsLabel}
         showHeader={false}
       />

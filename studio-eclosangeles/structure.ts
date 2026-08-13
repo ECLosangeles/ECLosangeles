@@ -8,14 +8,17 @@ import type {StructureResolver} from 'sanity/structure'
  */
 export const SINGLETON_TYPES = new Set<string>(['homePage'])
 
-// Internal type created by the Document Internationalization plugin to link an
-// English page to its Amharic translation. Editors never open it directly.
-const HIDDEN_TYPES = new Set<string>(['homePage', 'translation.metadata'])
+// Types managed through explicit list items above, so they shouldn't also show
+// up in the auto-generated document type list below.
+const HIDDEN_TYPES = new Set<string>(['homePage'])
 
 /**
- * The Home Page is a single entry. Editors open it (English by default) and use
- * the "Translations" button in the toolbar to create/switch to the Amharic
- * version — which copies the English content as a starting point to translate.
+ * The Home Page is a single entry the editor opens directly.
+ *
+ * The document id is plain `homePage`. It used to be `homePage-en`, a suffix the
+ * Document Internationalization plugin required; the site is English-only now
+ * and that plugin is gone. Any existing `homePage-en` document in the dataset
+ * needs migrating to the new id — see the seed script.
  */
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -24,7 +27,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title('Home Page')
         .id('homePage')
-        .child(S.document().schemaType('homePage').documentId('homePage-en').title('Home Page')),
+        .child(S.document().schemaType('homePage').documentId('homePage').title('Home Page')),
 
       S.divider(),
 

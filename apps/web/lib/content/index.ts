@@ -1,5 +1,7 @@
 export { ANNUAL_REPORTS, BYLAWS, FINANCIALS } from './documents';
 export type { DocumentEntry, DocumentLibrary } from './documents';
+export { EVENT_GALLERIES, findGalleryBySlug } from './galleries';
+export type { EventGallery, GalleryImage } from './galleries';
 export { HOME_PAGE, getHomePageContent, getProgramBySlug, getProgramsContent } from './home';
 export type { HomePageContent } from './home';
 export { PROGRAMS, findProgramBySlug } from './programs';

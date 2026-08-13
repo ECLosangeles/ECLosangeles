@@ -8,20 +8,15 @@ import {
   ValuesBlock,
   VisionStrip,
 } from '@eclosangeles/ui';
-import type { Locale } from '@/i18n/routing';
 import { getHomePageContent } from '@/lib/content';
-import { withLocalePrefix } from '@/lib/withLocalePrefix';
 
-export default async function HomePage({ params }: { params: Promise<{ locale: Locale }> }) {
-  const { locale } = await params;
-  const linkPrefix = `/${locale}`;
+export default function HomePage() {
   const { hero, statements, programs, values, events, knowYourRights, vision, membership } =
     getHomePageContent();
 
   return (
     <>
       <Hero
-        linkPrefix={linkPrefix}
         imageSrc={hero.imageSrc}
         imageAlt={hero.imageAlt}
         tagline={hero.tagline}
@@ -32,19 +27,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
         welcomeChip={hero.welcomeChip}
       />
       <MissionBlock statements={statements} />
-      <ProgramGrid
-        programs={programs.items}
-        linkPrefix={linkPrefix}
-        eyebrow={programs.eyebrow}
-        title={programs.title}
-      />
+      <ProgramGrid programs={programs.items} eyebrow={programs.eyebrow} title={programs.title} />
       <ValuesBlock values={values.items} eyebrow={values.eyebrow} title={values.title} />
       <EventsRail
         flyers={events.flyers}
         eyebrow={events.eyebrow}
         title={events.title}
         description={events.description}
-        allEventsHref={withLocalePrefix(linkPrefix, events.href, '/events')}
+        allEventsHref={events.href || '/events'}
         allEventsLabel={events.allEventsLabel}
       />
       <KnowYourRights videos={knowYourRights.videos} />
@@ -54,13 +44,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
         title={vision.title}
         description={vision.description}
         ctaLabel={vision.ctaLabel}
-        ctaHref={withLocalePrefix(linkPrefix, vision.href, '/membership')}
+        ctaHref={vision.href || '/membership'}
       />
       <MembershipBlock
         eyebrow={membership.eyebrow}
         title={membership.title}
         description={membership.description}
-        joinHref={withLocalePrefix(linkPrefix, membership.href, '/membership')}
+        joinHref={membership.href || '/membership'}
       />
     </>
   );

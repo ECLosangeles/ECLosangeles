@@ -1,0 +1,94 @@
+.main {
+  background: var(--bg-base);
+  padding: var(--space-7) var(--space-6) 120px;
+}
+
+.inner {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.back {
+  color: var(--fg-2);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: var(--space-5);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.back:hover {
+  color: var(--fg-1);
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 56px;
+  line-height: 62px;
+  margin: 12px 0 var(--space-5);
+}
+
+@media (max-width: 880px) {
+  .title {
+    font-size: 36px;
+    line-height: 42px;
+  }
+}
+
+.lead {
+  font-size: 20px;
+  line-height: 32px;
+  color: var(--fg-2);
+  max-width: 640px;
+  margin: 0 0 var(--space-7);
+}
+
+.grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  display: block;
+  height: 100%;
+  padding: var(--space-5);
+  border: 1px solid rgba(28, 27, 25, 0.12);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(239, 219, 178, 0.6)), var(--earth-50);
+  box-shadow: var(--shadow-xs);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  text-decoration: none;
+}
+
+.cardTitle {
+  font-size: 22px;
+  line-height: 30px;
+  margin: 0;
+}
+
+.cardDate {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: var(--fg-2);
+}
+
+.cardMeta {
+  margin: var(--space-3) 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green-700);
+}

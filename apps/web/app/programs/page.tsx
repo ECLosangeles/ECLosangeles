@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Eyebrow, ProgramCard } from '@eclosangeles/ui';
-import type { Locale } from '@/i18n/routing';
 import { getProgramsContent } from '@/lib/content';
 import styles from './page.module.css';
 
@@ -10,12 +9,7 @@ export const metadata: Metadata = {
     'Four program areas serving Ethiopian families across Greater Los Angeles — immigration services, older adult services, mental health services, and workforce development.',
 };
 
-export default async function ProgramsIndexPage({
-  params,
-}: {
-  params: Promise<{ locale: Locale }>;
-}) {
-  const { locale } = await params;
+export default function ProgramsIndexPage() {
   const programs = getProgramsContent();
 
   return (
@@ -26,7 +20,7 @@ export default async function ProgramsIndexPage({
       </div>
       <div className={styles.grid}>
         {programs.items.map((p) => (
-          <ProgramCard key={p.slug} program={p} linkPrefix={`/${locale}`} />
+          <ProgramCard key={p.slug} program={p} />
         ))}
       </div>
     </main>

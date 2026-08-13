@@ -136,6 +136,84 @@
   height: 12px;
 }
 
+/* A dropdown row that owns a flyout of its own. */
+.dropdownGroup {
+  position: relative;
+}
+
+.dropdownRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dropdownRow .dropdownLink {
+  flex: 1;
+}
+
+.subCaret {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fg-2);
+  cursor: pointer;
+  border-radius: var(--radius-pill);
+}
+
+.subCaret:hover {
+  color: var(--green-700);
+  background: rgba(116, 170, 80, 0.12);
+}
+
+.subCaret svg {
+  display: block;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+/* The nested caret points sideways at rest and down once its flyout is open. */
+.caretSide {
+  transform: rotate(-90deg);
+}
+
+.caretSide.navCaretOpen {
+  transform: rotate(0deg);
+}
+
+.submenu {
+  position: absolute;
+  top: -6px;
+  left: calc(100% + 6px);
+  min-width: 230px;
+  display: grid;
+  gap: 2px;
+  padding: 6px;
+  border: 1px solid rgba(28, 27, 25, 0.14);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(239, 219, 178, 0.96)), var(--earth-50);
+  box-shadow: var(--shadow-lg);
+  z-index: 61;
+}
+
+.submenu[hidden] {
+  display: none;
+}
+
+/* Bridges the gap between the row and its flyout so hover survives the trip. */
+.submenu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -10px;
+  width: 10px;
+}
+
 .dropdownLink {
   display: block;
   padding: 10px 12px;
@@ -309,6 +387,7 @@
   }
 
   .mobileSubNavLink {
+    display: block;
     color: var(--fg-2);
     text-decoration: none;
     border-radius: 11px;

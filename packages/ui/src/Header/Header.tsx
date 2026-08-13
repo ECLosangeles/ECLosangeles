@@ -10,6 +10,8 @@ export type NavKey = 'about' | 'programs' | 'events' | 'stories' | 'membership';
 export interface HeaderNavChild {
   label: string;
   href: string;
+  /** Third-level pages, shown in a flyout beside this item */
+  children?: ReadonlyArray<HeaderNavChild>;
 }
 
 export interface HeaderNavItem {
@@ -38,6 +40,91 @@ export interface HeaderProps {
   homeHref?: string;
   /** Visually hidden label for the brand link (for assistive tech) */
   brandLabel?: string;
+}
+
+const CARET_PATH = 'M1 1.5 5 5.5 9 1.5';
+
+function Caret({ open, rotated }: { open: boolean; rotated?: boolean }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={`${rotated ? styles.caretSide : ''} ${open ? styles.navCaretOpen : ''}`}
+      width="10"
+      height="7"
+      viewBox="0 0 10 7"
+      fill="none"
+    >
+      <path
+        d={CARET_PATH}
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+interface DropdownItemProps {
+  child: HeaderNavChild;
+  onNavigate: () => void;
+}
+
+/**
+ * A row inside a dropdown. Leaf rows are plain links; a row with its own
+ * sub-pages keeps its link and opens a flyout to the side for them.
+ */
+function DropdownItem({ child, onNavigate }: DropdownItemProps) {
+  const [open, setOpen] = useState(false);
+  const submenuId = useId();
+  const subPages = child.children;
+
+  if (!subPages || subPages.length === 0) {
+    return (
+      <Link href={child.href} className={styles.dropdownLink} onClick={onNavigate}>
+        {child.label}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className={styles.dropdownGroup}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOpen(false);
+      }}
+    >
+      <div className={styles.dropdownRow}>
+        <Link href={child.href} className={styles.dropdownLink} onClick={onNavigate}>
+          {child.label}
+        </Link>
+        <button
+          type="button"
+          className={styles.subCaret}
+          aria-label={`${child.label} sub-pages`}
+          aria-expanded={open}
+          aria-controls={submenuId}
+          onClick={() => setOpen((isOpen) => !isOpen)}
+        >
+          <Caret open={open} rotated />
+        </button>
+      </div>
+      <div id={submenuId} className={styles.submenu} hidden={!open}>
+        {subPages.map((grandChild) => (
+          <Link
+            key={grandChild.href}
+            href={grandChild.href}
+            className={styles.dropdownLink}
+            onClick={onNavigate}
+          >
+            {grandChild.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 interface NavDropdownProps {
@@ -101,33 +188,11 @@ function NavDropdown({ item, subPages, isActive }: NavDropdownProps) {
       >
         {/* An inline SVG rather than a "▾" character — that glyph is missing
             from many UI fonts and degrades to a faint dot. */}
-        <svg
-          aria-hidden="true"
-          className={open ? styles.navCaretOpen : undefined}
-          width="10"
-          height="7"
-          viewBox="0 0 10 7"
-          fill="none"
-        >
-          <path
-            d="M1 1.5 5 5.5 9 1.5"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <Caret open={open} />
       </button>
       <div id={menuId} className={styles.dropdown} hidden={!open}>
         {subPages.map((child) => (
-          <Link
-            key={child.href}
-            href={child.href}
-            className={styles.dropdownLink}
-            onClick={() => setOpen(false)}
-          >
-            {child.label}
-          </Link>
+          <DropdownItem key={child.href} child={child} onNavigate={() => setOpen(false)} />
         ))}
       </div>
     </div>
@@ -217,14 +282,29 @@ export function Header({
               {children && children.length > 0 && (
                 <div className={styles.mobileSubNav}>
                   {children.map((child) => (
-                    <Link
-                      key={child.href}
-                      href={child.href}
-                      className={styles.mobileSubNavLink}
-                      onClick={onMobileNavigate}
-                    >
-                      {child.label}
-                    </Link>
+                    <div key={child.href}>
+                      <Link
+                        href={child.href}
+                        className={styles.mobileSubNavLink}
+                        onClick={onMobileNavigate}
+                      >
+                        {child.label}
+                      </Link>
+                      {child.children && child.children.length > 0 && (
+                        <div className={styles.mobileSubNav}>
+                          {child.children.map((grandChild) => (
+                            <Link
+                              key={grandChild.href}
+                              href={grandChild.href}
+                              className={styles.mobileSubNavLink}
+                              onClick={onMobileNavigate}
+                            >
+                              {grandChild.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}

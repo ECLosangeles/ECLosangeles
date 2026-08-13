@@ -24,7 +24,7 @@ export function SiteHeader({ nav, homeHref }: SiteHeaderProps) {
     setMobileNavOpen(false);
   }, [pathname]);
 
-  // No language toggle while the site is English-only — see i18n/routing.ts.
+  // No language toggle: the site is English-only.
   return (
     <Header
       nav={nav}

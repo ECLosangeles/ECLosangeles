@@ -31,7 +31,7 @@ async function uploadImage(relativePath: string) {
   }
 }
 
-async function buildHomePage(locale: 'en' | 'am') {
+async function buildHomePage() {
   const [
     heroImage,
     inclusivenessImage,
@@ -71,11 +71,9 @@ async function buildHomePage(locale: 'en' | 'am') {
   )
 
   return {
-    _id: `homePage-${locale}`,
+    _id: 'homePage',
     _type: 'homePage',
-    // `language` is the field the Document Internationalization plugin manages.
-    language: locale,
-    title: locale === 'en' ? 'Home Page' : 'Home Page - Amharic',
+    title: 'Home Page',
     hero: {
       tagline: 'Serving Greater LA since 2019',
       title: 'A trusted neighbor for Ethiopian families across',
@@ -238,30 +236,26 @@ async function buildHomePage(locale: 'en' | 'am') {
   }
 }
 
-// Links the English and Amharic home pages so the Studio shows them as
-// translations of one another (the "Translations" button in the toolbar).
-function buildTranslationMetadata() {
-  return {
-    _id: 'homePage-translations',
-    _type: 'translation.metadata',
-    schemaTypes: ['homePage'],
-    translations: [
-      {_key: 'en', value: {_type: 'reference', _ref: 'homePage-en'}},
-      {_key: 'am', value: {_type: 'reference', _ref: 'homePage-am'}},
-    ],
-  }
-}
+/**
+ * Documents left over from the bilingual setup: the per-language home pages and
+ * the metadata document that linked them. They are removed after the new
+ * single `homePage` document is written, so a re-run of this script leaves the
+ * dataset clean rather than accumulating orphans the Studio no longer lists.
+ */
+const LEGACY_DOCUMENT_IDS = ['homePage-en', 'homePage-am', 'homePage-translations']
 
 async function seed() {
-  const documents = await Promise.all([buildHomePage('en'), buildHomePage('am')])
+  const document = await buildHomePage()
 
-  for (const document of documents) {
-    await client.createOrReplace(document)
-    console.log(`Seeded ${document._id}`)
+  await client.createOrReplace(document)
+  console.log(`Seeded ${document._id}`)
+
+  for (const id of LEGACY_DOCUMENT_IDS) {
+    await client.delete(id).catch(() => {
+      // Already gone — nothing to clean up.
+    })
   }
-
-  await client.createOrReplace(buildTranslationMetadata())
-  console.log('Linked en/am translations')
+  console.log('Removed legacy bilingual home page documents')
 }
 
 seed().catch((error) => {

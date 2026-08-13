@@ -1,7 +1,4 @@
 import { PHASE_DEVELOPMENT_SERVER } from 'next/constants.js';
-import createNextIntlPlugin from 'next-intl/plugin';
-
-const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const sharedConfig = {
@@ -12,15 +9,15 @@ const sharedConfig = {
     '@eclosangeles/ui',
     '@eclosangeles/content-schema',
   ],
-  // All imagery is served from `public/` now that content lives in the repo —
-  // no remote patterns needed.
+  // Imagery is served from `public/` while content lives in the repo. Phase 1 of
+  // the Sanity re-integration adds `cdn.sanity.io` here.
 };
 
 export default function nextConfig(phase) {
-  return withNextIntl({
+  return {
     ...sharedConfig,
     // Keep `next dev` and `next build/start` caches separate so one cannot corrupt
     // the other's server chunks while switching commands on Windows.
     distDir: phase === PHASE_DEVELOPMENT_SERVER ? '.next-dev' : '.next',
-  });
+  };
 }

@@ -24,14 +24,8 @@
   },
   "peerDependencies": {
     "next": "^15.0.0",
-    "next-intl": "^3.26.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
-  },
-  "peerDependenciesMeta": {
-    "next-intl": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
@@ -42,7 +36,6 @@
     "@vitejs/plugin-react": "^4.3.4",
     "happy-dom": "^15.11.7",
     "next": "^15.1.3",
-    "next-intl": "^3.26.3",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }

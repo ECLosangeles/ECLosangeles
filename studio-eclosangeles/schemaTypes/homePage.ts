@@ -1,8 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-// NOTE: The `language` field is added automatically by the Document
-// Internationalization plugin (see sanity.config.ts) — don't define it here.
-
 const linkField = defineField({
   name: 'href',
   title: 'Link',
@@ -350,12 +347,10 @@ export const homePage = defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'language',
     },
-    prepare({title, subtitle}) {
+    prepare({title}) {
       return {
         title: title || 'Home Page',
-        subtitle: subtitle ? `Language: ${subtitle}` : undefined,
       }
     },
   },

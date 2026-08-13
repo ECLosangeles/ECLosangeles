@@ -46,9 +46,9 @@ const DEFAULT_COLUMNS: ReadonlyArray<FooterColumn> = [
 
 export interface FooterProps {
   /**
-   * Optional path prefix prepended to every internal link.
-   * Use to force locale-prefixed URLs (e.g. "/en" or "/am") when next-intl is set
-   * to `localePrefix: 'always'`. Defaults to empty (links work as-is).
+   * Optional path prefix prepended to every internal link — e.g. to mount the
+   * whole site under a sub-path. Defaults to empty (links work as-is), which is
+   * what the site uses now that routes are unprefixed.
    */
   linkPrefix?: string;
   columns?: ReadonlyArray<FooterColumn>;
