@@ -17,6 +17,7 @@
     "migrate:homepage": "sanity exec scripts/migrateHomePageId.ts --with-user-token",
     "seed": "sanity exec scripts/seedHomePage.ts --with-user-token",
     "seed:vision": "sanity exec scripts/seedVisionStatement.ts --with-user-token",
+    "seed:tier1": "sanity exec scripts/seedTier1.ts --with-user-token",
     "seed:programs": "sanity exec scripts/seedHomePagePrograms.ts --with-user-token"
   },
   "keywords": [

@@ -1,34 +1,33 @@
-import type { Story } from '@eclosangeles/content-schema';
+import { STORIES_QUERY } from '../sanity/queries';
+import type { STORIES_QUERY_RESULT } from '../sanity/sanity.types';
+import { sanityFetch } from '../sanity/live';
 
-export const STORIES: ReadonlyArray<Story> = [
-  {
-    slug: 'walk-in-clinic-tuesday',
-    title: 'Tuesday at the walk-in clinic',
-    excerpt:
-      'Three families. One pile of paperwork. A volunteer translator who has seen it all before.',
-    body: 'Real stories from the immigration walk-in clinic — names changed, details shared with consent. (Placeholder body — actual stories pending.)',
-    publishedAt: '2026-04-21',
-    authorName: 'ECLA Volunteers',
-  },
-  {
-    slug: 'art-and-mind',
-    title: 'Art & Mind: a quieter way into mental health',
-    excerpt:
-      'Sometimes the easiest way to talk about how you are doing is to draw it. Inside our art-based mental wellness program.',
-    body: 'Placeholder for an upcoming feature on Art & Mind — our art-based mental health meetup. (Body pending.)',
-    publishedAt: '2026-03-12',
-  },
-  {
-    slug: 'meskel-2025',
-    title: 'Meskel 2025 in Little Ethiopia',
-    excerpt:
-      'A community gathering, a bonfire, and three generations passing a single story between them.',
-    body: 'Placeholder for an upcoming retrospective on the 2025 Meskel celebration. (Body pending.)',
-    publishedAt: '2025-09-29',
-    authorName: 'ECLA Community',
-  },
-];
+/**
+ * A story as shown in the listing.
+ *
+ * The full body is not fetched here: there is no story detail route yet, so
+ * nothing renders it. When that route is added, give it its own query rather
+ * than loading every body to build a list of teasers.
+ */
+export interface StorySummary {
+  slug: string;
+  title: string;
+  excerpt: string;
+  /** ISO date string */
+  publishedAt: string;
+  authorName?: string;
+}
 
-export function findStoryBySlug(slug: string): Story | undefined {
-  return STORIES.find((s) => s.slug === slug);
+export async function getStories(): Promise<ReadonlyArray<StorySummary>> {
+  const { data } = await sanityFetch({ query: STORIES_QUERY });
+
+  return ((data ?? []) as STORIES_QUERY_RESULT)
+    .filter((story) => story.slug && story.title && story.publishedAt)
+    .map((story) => ({
+      slug: story.slug!,
+      title: story.title!,
+      excerpt: story.excerpt ?? '',
+      publishedAt: story.publishedAt!,
+      ...(story.authorName ? { authorName: story.authorName } : {}),
+    }));
 }

@@ -5,7 +5,7 @@ import { Footer, type HeaderNavItem } from '@eclosangeles/ui';
 import { Suspense } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { VisualEditingBridge } from '@/components/VisualEditingBridge';
-import { EVENT_GALLERIES, PROGRAMS } from '@/lib/content';
+import { getEventGalleries, getPrograms } from '@/lib/content';
 import { FOOTER_COPY, NAV_COPY } from '@/lib/site-copy';
 import { SanityLive } from '@/lib/sanity/live';
 import './globals.css';
@@ -45,49 +45,57 @@ export const metadata: Metadata = {
     'A trusted neighbor for Ethiopian families across Greater Los Angeles. ECLA is a 501(c)(3) civic nonprofit serving the social, economic, educational, health, immigration, and cultural needs of our community.',
 };
 
-const nav: ReadonlyArray<HeaderNavItem> = [
-  {
-    key: 'about',
-    label: NAV_COPY.about,
-    href: '/about',
-    children: [
-      { label: NAV_COPY.annualReports, href: '/about/annual-reports' },
-      { label: NAV_COPY.bylaws, href: '/about/bylaws' },
-      { label: NAV_COPY.financials, href: '/about/financials' },
-    ],
-  },
-  {
-    key: 'programs',
-    label: NAV_COPY.programs,
-    href: '/programs',
-    // Driven off the program list itself, so adding or retiring a program
-    // updates the nav without a second edit here.
-    children: PROGRAMS.map((program) => ({
-      label: program.title,
-      href: `/programs/${program.slug}`,
-    })),
-  },
-  {
-    key: 'events',
-    label: NAV_COPY.events,
-    href: '/events',
-    children: [
-      {
-        label: NAV_COPY.galleryOfEvents,
-        href: '/events/gallery',
-        // Each past-event gallery gets its own entry in the side flyout.
-        children: EVENT_GALLERIES.map((gallery) => ({
-          label: gallery.title,
-          href: `/events/gallery/${gallery.slug}`,
-        })),
-      },
-    ],
-  },
-  { key: 'stories', label: NAV_COPY.stories, href: '/stories' },
-  { key: 'membership', label: NAV_COPY.membership, href: '/membership' },
-];
+/**
+ * The nav is partly CMS-driven: adding a program or an event gallery in the
+ * Studio puts it in the menu without a code change.
+ */
+async function buildNav(): Promise<ReadonlyArray<HeaderNavItem>> {
+  const [programs, galleries] = await Promise.all([getPrograms(), getEventGalleries()]);
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return [
+    {
+      key: 'about',
+      label: NAV_COPY.about,
+      href: '/about',
+      children: [
+        { label: NAV_COPY.annualReports, href: '/about/annual-reports' },
+        { label: NAV_COPY.bylaws, href: '/about/bylaws' },
+        { label: NAV_COPY.financials, href: '/about/financials' },
+      ],
+    },
+    {
+      key: 'programs',
+      label: NAV_COPY.programs,
+      href: '/programs',
+      children: programs.map((program) => ({
+        label: program.title,
+        href: `/programs/${program.slug}`,
+      })),
+    },
+    {
+      key: 'events',
+      label: NAV_COPY.events,
+      href: '/events',
+      children: [
+        {
+          label: NAV_COPY.galleryOfEvents,
+          href: '/events/gallery',
+          // Each past-event gallery gets its own entry in the side flyout.
+          children: galleries.map((gallery) => ({
+            label: gallery.title,
+            href: `/events/gallery/${gallery.slug}`,
+          })),
+        },
+      ],
+    },
+    { key: 'stories', label: NAV_COPY.stories, href: '/stories' },
+    { key: 'membership', label: NAV_COPY.membership, href: '/membership' },
+  ];
+}
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const nav = await buildNav();
+
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable} ${amharicFont.variable}`}>
       <body>

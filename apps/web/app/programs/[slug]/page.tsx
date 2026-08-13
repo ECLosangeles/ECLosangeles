@@ -2,13 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Button, DocumentEmbed, Eyebrow, VideoEmbed } from '@eclosangeles/ui';
-import { PROGRAMS, getProgramBySlug } from '@/lib/content';
+import { findProgramBySlug, getProgramSlugs } from '@/lib/content';
 import styles from './page.module.css';
 
-// Read straight from the repo rather than through the home page content: these
-// routes are built from data that lives in code, so there is nothing to fetch.
-export function generateStaticParams() {
-  return PROGRAMS.map((program) => ({ slug: program.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProgramSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -17,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const program = getProgramBySlug(slug);
+  const program = await findProgramBySlug(slug);
   if (!program) return { title: 'Program not found' };
   return {
     title: program.title,
@@ -27,7 +26,7 @@ export async function generateMetadata({
 
 export default async function ProgramDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const program = getProgramBySlug(slug);
+  const program = await findProgramBySlug(slug);
   if (!program) notFound();
 
   return (

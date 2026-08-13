@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Eyebrow } from '@eclosangeles/ui';
-import { STORIES } from '@/lib/content';
+import { getStories } from '@/lib/content';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -10,7 +10,9 @@ export const metadata: Metadata = {
     'Stories from ECLA volunteers, members, and the community we serve. Names and details shared with consent.',
 };
 
-export default function StoriesPage() {
+export default async function StoriesPage() {
+  const stories = await getStories();
+
   return (
     <main className={styles.main}>
       <div className={styles.intro}>
@@ -22,7 +24,7 @@ export default function StoriesPage() {
         </p>
       </div>
       <div className={styles.list}>
-        {STORIES.map((story) => (
+        {stories.map((story) => (
           <article key={story.slug} className={styles.card}>
             <time className={styles.date} dateTime={story.publishedAt}>
               {new Date(story.publishedAt).toLocaleDateString('en-US', {

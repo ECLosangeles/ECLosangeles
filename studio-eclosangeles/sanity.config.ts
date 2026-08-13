@@ -2,6 +2,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {presentationTool} from 'sanity/presentation'
 import {visionTool} from '@sanity/vision'
+import {locations} from './presentationLocations'
 import {schemaTypes} from './schemaTypes'
 import {SINGLETON_TYPES, structure} from './structure'
 
@@ -32,6 +33,7 @@ export default defineConfig({
     // any field the page pulled from Sanity. `previewMode.enable` is the route
     // in the Next.js app that turns on draft mode for the preview iframe.
     presentationTool({
+      resolve: {locations},
       previewUrl: {
         origin: previewOrigin,
         preview: '/',

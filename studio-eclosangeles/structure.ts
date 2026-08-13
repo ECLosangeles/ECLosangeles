@@ -3,14 +3,13 @@ import type {StructureResolver} from 'sanity/structure'
 /**
  * Document types that are singletons. They are managed through explicit list
  * items below and hidden from the generic "create new document" list so editors
- * can't spawn duplicates that the website's `[0]` queries would then pick from
- * at random.
+ * can't spawn duplicates that the website's fixed-id queries would then miss.
  */
 export const SINGLETON_TYPES = new Set<string>(['homePage'])
 
-// Types managed through explicit list items above, so they shouldn't also show
-// up in the auto-generated document type list below.
-const HIDDEN_TYPES = new Set<string>(['homePage'])
+// Types that get their own list item below, so they shouldn't also appear in
+// the auto-generated document type list at the bottom.
+const HIDDEN_TYPES = new Set<string>(['homePage', 'program', 'eventGallery', 'story'])
 
 /**
  * The Home Page is a single entry the editor opens directly.
@@ -31,6 +30,35 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      // Any future, non-singleton document types appear here automatically.
+      S.listItem()
+        .title('Programs')
+        .schemaType('program')
+        .child(
+          S.documentTypeList('program')
+            .title('Programs')
+            .defaultOrdering([{field: 'order', direction: 'asc'}]),
+        ),
+
+      S.listItem()
+        .title('Event Galleries')
+        .schemaType('eventGallery')
+        .child(
+          S.documentTypeList('eventGallery')
+            .title('Event Galleries')
+            .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
+        ),
+
+      S.listItem()
+        .title('Stories')
+        .schemaType('story')
+        .child(
+          S.documentTypeList('story')
+            .title('Stories')
+            .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
+        ),
+
+      S.divider(),
+
+      // Any future type appears here automatically until it gets its own entry.
       ...S.documentTypeListItems().filter((listItem) => !HIDDEN_TYPES.has(listItem.getId() ?? '')),
     ])

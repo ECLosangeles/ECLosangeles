@@ -22,6 +22,122 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 };
 
+export type Story = {
+  _id: string;
+  _type: 'story';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  excerpt?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }>;
+  publishedAt?: string;
+  authorName?: string;
+  coverImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+};
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop';
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot';
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type Slug = {
+  _type: 'slug';
+  current?: string;
+  source?: string;
+};
+
+export type EventGallery = {
+  _id: string;
+  _type: 'eventGallery';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  date?: string;
+  description?: string;
+  publishedAt?: string;
+  images?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: 'image';
+    _key: string;
+  }>;
+};
+
+export type Program = {
+  _id: string;
+  _type: 'program';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  order?: number;
+  tone?:
+    | 'green-500'
+    | 'green-600'
+    | 'green-700'
+    | 'saffron-400'
+    | 'saffron-500'
+    | 'red-500'
+    | 'earth-700';
+  summary?: string;
+  body?: string;
+  helpsWith?: Array<string>;
+  whatToBring?: string;
+  walkInClinic?: {
+    schedule?: string;
+    address?: string;
+  };
+  videos?: Array<{
+    title?: string;
+    url?: string;
+    _key: string;
+  }>;
+};
+
 export type HomePage = {
   _id: string;
   _type: 'homePage';
@@ -166,28 +282,6 @@ export type HomePage = {
   };
 };
 
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop';
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot';
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type Slug = {
-  _type: 'slug';
-  current?: string;
-  source?: string;
-};
-
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch';
   background?: string;
@@ -287,10 +381,13 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
-  | HomePage
+  | Story
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
+  | EventGallery
+  | Program
+  | HomePage
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -384,3 +481,112 @@ export type HOME_PAGE_QUERY_RESULT = {
     href: string | null;
   } | null;
 } | null;
+
+// Source: ../apps/web/lib/sanity/queries.ts
+// Variable: PROGRAMS_QUERY
+// Query: *[_type == "program" && defined(slug.current)] | order(order asc){    "slug": slug.current,    title,    order,    tone,    summary,    body,    helpsWith,    whatToBring,    walkInClinic{schedule, address},    videos[]{title, url}  }
+export type PROGRAMS_QUERY_RESULT = Array<{
+  slug: string | null;
+  title: string | null;
+  order: number | null;
+  tone:
+    | 'earth-700'
+    | 'green-500'
+    | 'green-600'
+    | 'green-700'
+    | 'red-500'
+    | 'saffron-400'
+    | 'saffron-500'
+    | null;
+  summary: string | null;
+  body: string | null;
+  helpsWith: Array<string> | null;
+  whatToBring: string | null;
+  walkInClinic: {
+    schedule: string | null;
+    address: string | null;
+  } | null;
+  videos: Array<{
+    title: string | null;
+    url: string | null;
+  }> | null;
+}>;
+
+// Source: ../apps/web/lib/sanity/queries.ts
+// Variable: PROGRAM_QUERY
+// Query: *[_type == "program" && slug.current == $slug][0]{    "slug": slug.current,    title,    tone,    summary,    body,    helpsWith,    whatToBring,    walkInClinic{schedule, address},    videos[]{title, url}  }
+export type PROGRAM_QUERY_RESULT = {
+  slug: string | null;
+  title: string | null;
+  tone:
+    | 'earth-700'
+    | 'green-500'
+    | 'green-600'
+    | 'green-700'
+    | 'red-500'
+    | 'saffron-400'
+    | 'saffron-500'
+    | null;
+  summary: string | null;
+  body: string | null;
+  helpsWith: Array<string> | null;
+  whatToBring: string | null;
+  walkInClinic: {
+    schedule: string | null;
+    address: string | null;
+  } | null;
+  videos: Array<{
+    title: string | null;
+    url: string | null;
+  }> | null;
+} | null;
+
+// Source: ../apps/web/lib/sanity/queries.ts
+// Variable: EVENT_GALLERIES_QUERY
+// Query: *[_type == "eventGallery" && defined(slug.current)] | order(publishedAt desc){    "slug": slug.current,    title,    date,    description,    "imageCount": count(images)  }
+export type EVENT_GALLERIES_QUERY_RESULT = Array<{
+  slug: string | null;
+  title: string | null;
+  date: string | null;
+  description: string | null;
+  imageCount: number | null;
+}>;
+
+// Source: ../apps/web/lib/sanity/queries.ts
+// Variable: EVENT_GALLERY_QUERY
+// Query: *[_type == "eventGallery" && slug.current == $slug][0]{    "slug": slug.current,    title,    date,    description,    images[]{      alt,      caption,      "url": asset->url,      "width": asset->metadata.dimensions.width,      "height": asset->metadata.dimensions.height,      "lqip": asset->metadata.lqip    }  }
+export type EVENT_GALLERY_QUERY_RESULT = {
+  slug: string | null;
+  title: string | null;
+  date: string | null;
+  description: string | null;
+  images: Array<{
+    alt: string | null;
+    caption: string | null;
+    url: string | null;
+    width: number | null;
+    height: number | null;
+    lqip: string | null;
+  }> | null;
+} | null;
+
+// Source: ../apps/web/lib/sanity/queries.ts
+// Variable: PROGRAM_SLUGS_QUERY
+// Query: *[_type == "program" && defined(slug.current)].slug.current
+export type PROGRAM_SLUGS_QUERY_RESULT = Array<string | null>;
+
+// Source: ../apps/web/lib/sanity/queries.ts
+// Variable: EVENT_GALLERY_SLUGS_QUERY
+// Query: *[_type == "eventGallery" && defined(slug.current)].slug.current
+export type EVENT_GALLERY_SLUGS_QUERY_RESULT = Array<string | null>;
+
+// Source: ../apps/web/lib/sanity/queries.ts
+// Variable: STORIES_QUERY
+// Query: *[_type == "story" && defined(slug.current)] | order(publishedAt desc){    "slug": slug.current,    title,    excerpt,    publishedAt,    authorName  }
+export type STORIES_QUERY_RESULT = Array<{
+  slug: string | null;
+  title: string | null;
+  excerpt: string | null;
+  publishedAt: string | null;
+  authorName: string | null;
+}>;

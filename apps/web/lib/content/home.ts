@@ -1,5 +1,5 @@
 import type { Program, Value } from '@eclosangeles/content-schema';
-import { PROGRAMS, findProgramBySlug } from './programs';
+import { getPrograms } from './programs';
 import { HOME_PAGE_QUERY } from '../sanity/queries';
 import type { HOME_PAGE_QUERY_RESULT } from '../sanity/sanity.types';
 import { sanityFetch } from '../sanity/live';
@@ -12,11 +12,6 @@ import { sanityFetch } from '../sanity/live';
  * field that produced it. Do not trim, slice, or re-case these values before
  * rendering — that corrupts the metadata and the click-to-edit overlay stops
  * finding the field.
- *
- * Programs are the exception: they still come from `programs.ts` because the
- * program detail pages need fields (body, documents, walk-in clinic) that have
- * no home in the CMS yet. Until a `program` document type exists, keeping one
- * source avoids the home grid and the detail pages disagreeing.
  */
 export interface HomePageContent {
   hero: {
@@ -126,7 +121,7 @@ function toFlyers(page: CmsHomePage): HomePageContent['events']['flyers'] {
     }));
 }
 
-function toHomePageContent(page: CmsHomePage): HomePageContent {
+function toHomePageContent(page: CmsHomePage, programs: ReadonlyArray<Program>): HomePageContent {
   return {
     hero: {
       tagline: str(page.hero?.tagline),
@@ -142,10 +137,9 @@ function toHomePageContent(page: CmsHomePage): HomePageContent {
     },
     statements: toStatements(page),
     programs: {
-      // Heading is editable; the cards below it are not, yet.
       eyebrow: str(page.programs?.eyebrow),
       title: str(page.programs?.title),
-      items: PROGRAMS,
+      items: programs,
     },
     values: {
       eyebrow: str(page.values?.eyebrow),
@@ -188,7 +182,10 @@ function toHomePageContent(page: CmsHomePage): HomePageContent {
  * build failure. Run `npm run migrate:homepage` in the Studio if this fires.
  */
 export async function getHomePageContent(): Promise<HomePageContent> {
-  const { data } = await sanityFetch({ query: HOME_PAGE_QUERY });
+  const [{ data }, programs] = await Promise.all([
+    sanityFetch({ query: HOME_PAGE_QUERY }),
+    getPrograms(),
+  ]);
 
   if (!data) {
     throw new Error(
@@ -196,14 +193,19 @@ export async function getHomePageContent(): Promise<HomePageContent> {
     );
   }
 
-  return toHomePageContent(data);
+  return toHomePageContent(data, programs);
 }
 
+/** The programs section heading plus its cards, for the /programs index. */
 export async function getProgramsContent(): Promise<HomePageContent['programs']> {
-  const content = await getHomePageContent();
-  return content.programs;
-}
+  const [{ data }, programs] = await Promise.all([
+    sanityFetch({ query: HOME_PAGE_QUERY }),
+    getPrograms(),
+  ]);
 
-export function getProgramBySlug(slug: string): Program | undefined {
-  return findProgramBySlug(slug);
+  return {
+    eyebrow: str(data?.programs?.eyebrow),
+    title: str(data?.programs?.title),
+    items: programs,
+  };
 }

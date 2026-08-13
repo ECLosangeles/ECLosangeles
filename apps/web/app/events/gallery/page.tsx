@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Eyebrow } from '@eclosangeles/ui';
-import { EVENT_GALLERIES } from '@/lib/content';
+import { getEventGalleries } from '@/lib/content';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   description: 'Photos from ECLA book signings, picnics, marathons, and community gatherings.',
 };
 
-export default function EventGalleryIndexPage() {
+export default async function EventGalleryIndexPage() {
+  const galleries = await getEventGalleries();
+
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
@@ -24,14 +26,14 @@ export default function EventGalleryIndexPage() {
         </p>
 
         <ul className={styles.grid}>
-          {EVENT_GALLERIES.map((gallery) => (
+          {galleries.map((gallery) => (
             <li key={gallery.slug}>
               <Link href={`/events/gallery/${gallery.slug}`} className={styles.card}>
                 <h2 className={styles.cardTitle}>{gallery.title}</h2>
                 {gallery.date && <p className={styles.cardDate}>{gallery.date}</p>}
                 <p className={styles.cardMeta}>
-                  {gallery.images.length > 0
-                    ? `${gallery.images.length} ${gallery.images.length === 1 ? 'photo' : 'photos'}`
+                  {gallery.imageCount > 0
+                    ? `${gallery.imageCount} ${gallery.imageCount === 1 ? 'photo' : 'photos'}`
                     : 'Photos coming soon'}
                 </p>
               </Link>

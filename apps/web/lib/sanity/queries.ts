@@ -66,3 +66,89 @@ export const HOME_PAGE_QUERY = defineQuery(`
     membership{eyebrow, title, description, href}
   }
 `);
+
+/** Programs, in display order. Used by the nav, the home grid and /programs. */
+export const PROGRAMS_QUERY = defineQuery(`
+  *[_type == "program" && defined(slug.current)] | order(order asc){
+    "slug": slug.current,
+    title,
+    order,
+    tone,
+    summary,
+    body,
+    helpsWith,
+    whatToBring,
+    walkInClinic{schedule, address},
+    videos[]{title, url}
+  }
+`);
+
+/** A single program's detail page. */
+export const PROGRAM_QUERY = defineQuery(`
+  *[_type == "program" && slug.current == $slug][0]{
+    "slug": slug.current,
+    title,
+    tone,
+    summary,
+    body,
+    helpsWith,
+    whatToBring,
+    walkInClinic{schedule, address},
+    videos[]{title, url}
+  }
+`);
+
+/**
+ * Galleries for the index page and the Events nav flyout.
+ *
+ * Only the photo count is fetched, not the photos — these lists show a count,
+ * and a gallery can hold a lot of images.
+ */
+export const EVENT_GALLERIES_QUERY = defineQuery(`
+  *[_type == "eventGallery" && defined(slug.current)] | order(publishedAt desc){
+    "slug": slug.current,
+    title,
+    date,
+    description,
+    "imageCount": count(images)
+  }
+`);
+
+export const EVENT_GALLERY_QUERY = defineQuery(`
+  *[_type == "eventGallery" && slug.current == $slug][0]{
+    "slug": slug.current,
+    title,
+    date,
+    description,
+    images[]{
+      alt,
+      caption,
+      "url": asset->url,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height,
+      "lqip": asset->metadata.lqip
+    }
+  }
+`);
+
+/**
+ * Slugs only, for `generateStaticParams`. Enumerating routes does not need the
+ * whole document, and this runs at build time for every route.
+ */
+export const PROGRAM_SLUGS_QUERY = defineQuery(`
+  *[_type == "program" && defined(slug.current)].slug.current
+`);
+
+export const EVENT_GALLERY_SLUGS_QUERY = defineQuery(`
+  *[_type == "eventGallery" && defined(slug.current)].slug.current
+`);
+
+export const STORIES_QUERY = defineQuery(`
+  *[_type == "story" && defined(slug.current)] | order(publishedAt desc){
+    "slug": slug.current,
+    title,
+    excerpt,
+    publishedAt,
+    authorName
+  }
+`);
