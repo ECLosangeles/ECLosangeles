@@ -50,17 +50,29 @@
   margin: 0 0 var(--space-6);
 }
 
+/*
+ * Masonry, via CSS multi-column.
+ *
+ * A grid would work only if every photo shared an aspect ratio. These are
+ * phone photos in a mix of portrait and landscape, so grid rows were sized by
+ * the tallest item in each row and left large gaps beside the short ones.
+ * Columns pack items vertically instead, so ragged heights cost nothing — and
+ * nothing has to be cropped to fit a uniform tile.
+ */
 .grid {
   list-style: none;
   padding: 0;
   margin: var(--space-6) 0 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-4);
+  column-width: 300px;
+  column-gap: var(--space-4);
 }
 
 .item {
-  margin: 0;
+  /* Stop a photo being split across a column boundary. */
+  break-inside: avoid;
+  /* Safari still needs the old property name. */
+  -webkit-column-break-inside: avoid;
+  margin: 0 0 var(--space-4);
 }
 
 .figure {
