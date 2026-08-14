@@ -1,8 +1,18 @@
+/*
+ * The hero artwork is 16:9. At 1280x720 it fits exactly, but the box keeps
+ * widening while the height stays capped, so every extra pixel of width is
+ * cropped off the artwork's height — a third of it by 1920px, half by 2560px.
+ *
+ * `46vw` lets the height track the width, which holds the crop to roughly a
+ * fifth at any size instead of growing without limit. Narrow screens are
+ * unaffected: below ~1565px the 720px floor still wins, so the original design
+ * is untouched at its intended size.
+ */
 .hero {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  min-height: min(720px, calc(100vh - var(--header-height)));
+  min-height: min(max(720px, 46vw), calc(100vh - var(--header-height)));
   background: var(--bg-inverse);
 }
 
@@ -10,7 +20,13 @@
   position: absolute;
   inset: 0;
   object-fit: cover;
-  object-position: center;
+  /*
+   * Anchored to the bottom because the composition is bottom-weighted: the
+   * tibeb pattern strip runs along the bottom edge and the stacked cups sit
+   * just above it. The top of the artwork is mostly empty cream, so whatever
+   * still has to be cropped is taken from there.
+   */
+  object-position: center bottom;
   z-index: -3;
 }
 
@@ -53,7 +69,8 @@
   display: grid;
   grid-template-columns: minmax(0, 820px);
   align-content: center;
-  min-height: min(720px, calc(100vh - var(--header-height)));
+  /* Matches `.hero` so the copy stays vertically centred as the hero grows. */
+  min-height: min(max(720px, 46vw), calc(100vh - var(--header-height)));
 }
 
 @media (max-width: 880px) {
