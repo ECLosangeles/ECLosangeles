@@ -2,25 +2,16 @@ import { Eyebrow } from '../Eyebrow';
 import { MemberCard } from '../MemberCard';
 import styles from './MembershipBlock.module.css';
 
-const REGULAR_FEATURES: ReadonlyArray<string> = [
-  'Voting rights at the annual meeting',
-  'Community updates in Amharic & English',
-  'Priority RSVP for ECLA events',
-  'Volunteer opportunities',
-  'Auto-renew or manual renewal',
-];
-
-const RETIRED_FEATURES: ReadonlyArray<string> = [
-  'Same voting and event privileges',
-  'Reduced rate for retirees',
-  'Auto-renew or manual renewal',
-];
-
 export interface MembershipBlockProps {
   title?: string;
   eyebrow?: string;
   description?: string;
   joinHref?: string;
+  /** Set false where the page already shows the signup form, so the cards
+   *  don't offer a button that links back to the page you are on. */
+  showJoinCta?: boolean;
+  /** Set false to drop the "Most members" badge from the primary card. */
+  showRecommendedTag?: boolean;
 }
 
 export function MembershipBlock({
@@ -28,6 +19,8 @@ export function MembershipBlock({
   eyebrow = 'Membership',
   description = 'Members vote on board elections, get a say in priorities, and help fund every program ECLA runs.',
   joinHref = '/membership',
+  showJoinCta = true,
+  showRecommendedTag = true,
 }: MembershipBlockProps) {
   return (
     <section className={styles.section}>
@@ -42,16 +35,15 @@ export function MembershipBlock({
             label="Regular"
             price="$60"
             cadence="per year"
-            features={REGULAR_FEATURES}
             primary
-            joinHref={joinHref}
+            joinHref={showJoinCta ? joinHref : undefined}
+            recommendedLabel={showRecommendedTag ? 'Most members' : undefined}
           />
           <MemberCard
             label="Retired"
             price="$30"
             cadence="per year"
-            features={RETIRED_FEATURES}
-            joinHref={joinHref}
+            joinHref={showJoinCta ? joinHref : undefined}
           />
         </div>
       </div>
