@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import styles from './Header.module.css';
 
-export type NavKey = 'about' | 'programs' | 'events' | 'stories' | 'membership';
+export type NavKey = 'about' | 'programs' | 'events' | 'stories' | 'contribute';
 
 export interface HeaderNavChild {
   label: string;

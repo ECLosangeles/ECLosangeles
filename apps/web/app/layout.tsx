@@ -89,7 +89,17 @@ async function buildNav(): Promise<ReadonlyArray<HeaderNavItem>> {
       ],
     },
     { key: 'stories', label: NAV_COPY.stories, href: '/stories' },
-    { key: 'membership', label: NAV_COPY.membership, href: '/membership' },
+    {
+      key: 'contribute',
+      label: NAV_COPY.contribute,
+      // "Contribute" has no page of its own; the parent link lands on the
+      // primary action and the menu offers both ways to give.
+      href: '/donate',
+      children: [
+        { label: NAV_COPY.donate, href: '/donate' },
+        { label: NAV_COPY.membership, href: '/membership' },
+      ],
+    },
   ];
 }
 

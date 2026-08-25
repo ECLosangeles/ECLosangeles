@@ -20,6 +20,7 @@ export const NAV_COPY = {
   galleryOfEvents: 'Gallery of Events',
   stories: 'Our stories',
   membership: 'Membership',
+  contribute: 'Contribute',
   donate: 'Donate',
 } as const;
 
