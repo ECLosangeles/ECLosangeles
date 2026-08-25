@@ -1,0 +1,34 @@
+.card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 20px;
+  }
+}
+
+/* The widget ships its own markup and styles; keep it from overflowing the card
+   and let its form controls inherit the site's typography. */
+.widget {
+  max-width: 100%;
+  overflow-x: auto;
+  font-family: var(--font-body);
+  color: var(--fg-1);
+}
+
+.widget :global(img),
+.widget :global(iframe) {
+  max-width: 100%;
+}
+
+.error {
+  color: var(--fg-cta);
+  font-size: 14px;
+  line-height: 22px;
+  margin: var(--space-3) 0 0;
+}

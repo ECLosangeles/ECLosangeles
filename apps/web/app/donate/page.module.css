@@ -27,3 +27,10 @@
   color: var(--fg-2);
   margin-bottom: var(--space-7);
 }
+
+.disclaimer {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--fg-2);
+  margin: var(--space-4) 0 0;
+}

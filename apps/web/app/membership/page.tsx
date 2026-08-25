@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
-import { Eyebrow, MembershipBlock, PlaceholderBanner } from '@eclosangeles/ui';
-import { MembershipForm } from './MembershipForm';
+import { Eyebrow, MembershipBlock } from '@eclosangeles/ui';
+import { BloomerangWidget } from '@/components/BloomerangWidget';
 import styles from './page.module.css';
+
+const MEMBERSHIP_WIDGET_SRC =
+  'https://s3-us-west-2.amazonaws.com/bloomerang-public-cdn/ethiopiancommunitylosangelesecla/.widget-js/34817.js';
 
 export const metadata: Metadata = {
   title: 'Membership',
@@ -14,17 +17,21 @@ export default function MembershipPage() {
     <>
       <main className={styles.intro}>
         <div className={styles.introInner}>
-          <PlaceholderBanner message="This is a preview. Membership signup is not enabled yet — submissions are mocked." />
           <Eyebrow>Become a member</Eyebrow>
           <h1 className={styles.title}>Join ECLA. Help shape what we do next.</h1>
           <p className={styles.lead}>
             Members vote on board elections, get a say in priorities, and help fund every program
             ECLA runs. Annual dues — and that&apos;s it.
           </p>
-          <MembershipForm />
+          <BloomerangWidget
+            src={MEMBERSHIP_WIDGET_SRC}
+            fallbackLabel="The membership form couldn't load."
+          />
         </div>
       </main>
-      <MembershipBlock />
+      {/* The signup form is right above, so these cards are a price summary
+          rather than another call to action. */}
+      <MembershipBlock showJoinCta={false} showRecommendedTag={false} />
     </>
   );
 }
