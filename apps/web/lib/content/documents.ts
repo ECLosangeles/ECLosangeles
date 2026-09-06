@@ -44,6 +44,7 @@ export const FINANCIALS: DocumentLibrary = {
   eyebrow: 'Financials',
   title: 'Our filings, open to read.',
   documents: [
+    { title: 'Form 990-EZ — 2025', href: '/documents/financials/form-990ez-2025.pdf' },
     { title: 'Form 990-EZ — 2024', href: '/documents/financials/form-990ez-2024.pdf' },
     { title: 'Form 990-EZ — 2023', href: '/documents/financials/form-990ez-2023.pdf' },
     { title: 'Form 990-EZ — 2022', href: '/documents/financials/form-990ez-2022.pdf' },
