@@ -2,8 +2,26 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Button, DocumentEmbed, Eyebrow, VideoEmbed } from '@eclosangeles/ui';
-import { findProgramBySlug, getProgramSlugs } from '@/lib/content';
+import { findProgramBySlug, getHomePageContent, getProgramSlugs } from '@/lib/content';
 import styles from './page.module.css';
+
+/**
+ * Programs whose "Watch" section shows the home page's Know Your Rights videos
+ * rather than their own CMS `videos` list.
+ *
+ * Immigration Services and the home page carry the same explainers, so they are
+ * edited in one place — the home page's Know Your Rights section in the Studio.
+ * Anything in this program's own `videos` field is ignored.
+ */
+const KNOW_YOUR_RIGHTS_VIDEO_SLUGS: ReadonlySet<string> = new Set(['immigration']);
+
+type ProgramVideos = ReadonlyArray<{ title: string; url: string }>;
+
+async function getProgramVideos(slug: string, videos: ProgramVideos): Promise<ProgramVideos> {
+  if (!KNOW_YOUR_RIGHTS_VIDEO_SLUGS.has(slug)) return videos;
+  const { knowYourRights } = await getHomePageContent();
+  return knowYourRights.videos;
+}
 
 export async function generateStaticParams() {
   const slugs = await getProgramSlugs();
@@ -29,6 +47,8 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
   const program = await findProgramBySlug(slug);
   if (!program) notFound();
 
+  const videos = await getProgramVideos(slug, program.videos ?? []);
+
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
@@ -39,12 +59,12 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
         <h1 className={styles.title}>{program.title}</h1>
         <p className={styles.lead}>{program.body ?? program.summary}</p>
 
-        {program.videos && program.videos.length > 0 && (
+        {videos.length > 0 && (
           <section className={styles.videos} aria-labelledby="program-videos">
             <h2 id="program-videos" className={styles.sectionTitle}>
               Watch
             </h2>
-            {program.videos.map((video) => (
+            {videos.map((video) => (
               <VideoEmbed key={video.url} url={video.url} title={video.title} />
             ))}
           </section>
