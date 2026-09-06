@@ -6,12 +6,11 @@ import {
   MissionBlock,
   ProgramGrid,
   ValuesBlock,
-  VisionStrip,
 } from '@eclosangeles/ui';
 import { getHomePageContent } from '@/lib/content';
 
 export default async function HomePage() {
-  const { hero, statements, programs, values, events, knowYourRights, vision, membership } =
+  const { hero, statements, programs, values, events, knowYourRights, membership } =
     await getHomePageContent();
 
   return (
@@ -38,14 +37,6 @@ export default async function HomePage() {
         allEventsLabel={events.allEventsLabel}
       />
       <KnowYourRights videos={knowYourRights.videos} />
-      <VisionStrip
-        items={vision.items}
-        eyebrow={vision.eyebrow}
-        title={vision.title}
-        description={vision.description}
-        ctaLabel={vision.ctaLabel}
-        ctaHref={vision.href || '/membership'}
-      />
       <MembershipBlock
         eyebrow={membership.eyebrow}
         title={membership.title}
