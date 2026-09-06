@@ -44,10 +44,11 @@
   transform: translateY(-1px);
 }
 
-/* The official logotype, rendered as vector artwork rather than set in a
-   display face — the ECLA letterforms are custom and must not be substituted. */
-.wordmark {
-  height: 26px;
+/* The official logotype. The ECLA letterforms are custom artwork and must not
+   be substituted with a display face. Height-constrained so the header keeps
+   its rhythm whatever the source image's pixel dimensions are. */
+.logo {
+  height: 34px;
   width: auto;
 }
 

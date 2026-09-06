@@ -3,9 +3,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { LOGO_SRC } from '../brand';
 import styles from './Header.module.css';
 
-export type NavKey = 'about' | 'programs' | 'events' | 'stories' | 'contribute';
+export type NavKey =
+  | 'about'
+  | 'programs'
+  /** The "Media Gallery" menu, which lives under /events */
+  | 'events'
+  | 'donate'
+  | 'membership'
+  | 'volunteer';
 
 export interface HeaderNavChild {
   label: string;
@@ -214,16 +222,17 @@ export function Header({
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link href={homeHref} className={styles.brand} aria-label={brandLabel}>
-          {/* Lion + logotype, the "Logo + Icon" lockup from the brand
-              guidelines. Both are the official vector artwork. */}
-          <Image src="/brand/icons/lion.svg" width={36} height={36} alt="" aria-hidden="true" />
+          {/* The official ECLA logotype — one asset, not a mark + wordmark
+              lockup, because the artwork already carries both. Loaded eagerly:
+              it is above the fold on every page. */}
           <Image
-            src="/brand/logo/logo-wordmark.svg"
-            width={74}
-            height={26}
+            src={LOGO_SRC}
+            width={92}
+            height={36}
             alt=""
             aria-hidden="true"
-            className={styles.wordmark}
+            priority
+            className={styles.logo}
           />
         </Link>
         <nav className={styles.nav} aria-label="Primary">

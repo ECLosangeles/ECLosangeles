@@ -12,16 +12,17 @@
 
 export const NAV_COPY = {
   about: 'About',
+  board: 'Our board',
   annualReports: 'Annual reports',
   bylaws: 'Bylaws',
   financials: 'Financials',
   programs: 'What we do',
+  mediaGallery: 'Media Gallery',
   events: 'Events',
-  galleryOfEvents: 'Gallery of Events',
-  stories: 'Our stories',
-  membership: 'Membership',
-  contribute: 'Contribute',
+  videos: 'Videos',
   donate: 'Donate',
+  membership: 'Become a member',
+  volunteer: 'Become a volunteer',
 } as const;
 
 export const FOOTER_COPY = {

@@ -1,0 +1,24 @@
+.layer {
+  position: absolute;
+  inset: 0;
+  /* Keeps motifs that bleed past an edge from widening the page. */
+  overflow: hidden;
+  pointer-events: none;
+  /* Above the sections' opaque backgrounds. Content that sets its own z-index
+     still paints over the motifs, which is what we want. */
+  z-index: 1;
+}
+
+.motif {
+  position: absolute;
+  height: auto;
+  user-select: none;
+}
+
+/* Below this width the content runs edge to edge and there is nowhere for the
+   artwork to sit without landing on the text. */
+@media (max-width: 900px) {
+  .layer {
+    display: none;
+  }
+}

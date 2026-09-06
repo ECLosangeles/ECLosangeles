@@ -40,6 +40,11 @@ body::before {
   mask-image: linear-gradient(180deg, black, transparent 82%);
 }
 
+/* Positioning context for the page-wide motif layer — see `PageMotifs`. */
+.pageShell {
+  position: relative;
+}
+
 img,
 svg,
 video {

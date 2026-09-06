@@ -5,11 +5,11 @@ import type {StructureResolver} from 'sanity/structure'
  * items below and hidden from the generic "create new document" list so editors
  * can't spawn duplicates that the website's fixed-id queries would then miss.
  */
-export const SINGLETON_TYPES = new Set<string>(['homePage'])
+export const SINGLETON_TYPES = new Set<string>(['homePage', 'siteStats'])
 
 // Types that get their own list item below, so they shouldn't also appear in
 // the auto-generated document type list at the bottom.
-const HIDDEN_TYPES = new Set<string>(['homePage', 'program', 'eventGallery', 'story'])
+const HIDDEN_TYPES = new Set<string>(['homePage', 'program', 'eventGallery', 'story', 'siteStats'])
 
 /**
  * The Home Page is a single entry the editor opens directly.
@@ -56,6 +56,13 @@ export const structure: StructureResolver = (S) =>
             .title('Stories')
             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
         ),
+
+      S.divider(),
+
+      S.listItem()
+        .title('Site Stats')
+        .id('siteStats')
+        .child(S.document().schemaType('siteStats').documentId('siteStats').title('Site Stats')),
 
       S.divider(),
 

@@ -41,9 +41,10 @@
   margin-bottom: var(--space-4);
 }
 
-/* Official logotype artwork (negative treatment) — see Header.module.css. */
-.wordmark {
-  height: 28px;
+/* The official logotype — the same artwork the header uses, a touch larger
+   because the footer has the room. */
+.logo {
+  height: 40px;
   width: auto;
 }
 

@@ -1,0 +1,11 @@
+/* Sits in the footer's bottom bar, alongside the copyright line. */
+.counter {
+  font-size: 13px;
+  color: rgba(239, 219, 178, 0.55);
+}
+
+.count {
+  font-weight: 700;
+  color: rgba(239, 219, 178, 0.85);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,3 +1,6 @@
+// Brand assets
+export * from './brand';
+
 // Primitives
 export * from './Eyebrow';
 export * from './TibebStrip';
@@ -22,4 +25,5 @@ export * from './DocumentEmbed';
 export * from './VideoEmbed';
 
 // Utilities
+export * from './PageMotifs';
 export * from './PlaceholderBanner';

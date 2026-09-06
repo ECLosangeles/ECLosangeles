@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
+import { LOGO_SRC } from '../brand';
 import styles from './Footer.module.css';
 
 interface FooterColumn {
@@ -13,7 +15,7 @@ const DEFAULT_COLUMNS: ReadonlyArray<FooterColumn> = [
     links: [
       { label: 'About us', href: '/about' },
       { label: 'Meet our board', href: '/about/board' },
-      { label: 'Volunteers', href: '/about/volunteers' },
+      { label: 'Volunteers', href: '/volunteer' },
       { label: 'Our stories', href: '/stories' },
       { label: 'Annual reports', href: '/about/annual-reports' },
       { label: 'Bylaws', href: '/about/bylaws' },
@@ -36,10 +38,10 @@ const DEFAULT_COLUMNS: ReadonlyArray<FooterColumn> = [
     links: [
       { label: 'Donate', href: '/donate' },
       { label: 'Become a member', href: '/membership' },
-      { label: 'Volunteer', href: '/about/volunteers' },
+      { label: 'Volunteer', href: '/volunteer' },
       { label: 'Current events', href: '/events' },
-      { label: 'Gallery of events', href: '/events#gallery' },
-      { label: 'Media gallery', href: '/stories#media' },
+      { label: 'Gallery of events', href: '/events/gallery' },
+      { label: 'Videos', href: '/events/videos' },
     ],
   },
 ];
@@ -56,6 +58,11 @@ export interface FooterProps {
   welcomeText?: string;
   /** Tagline appended to the copyright line — defaults to '501(c)(3) nonprofit · Founded 2019' */
   rightsTagline?: string;
+  /**
+   * Slot in the bottom bar, between the copyright and the welcome — used for
+   * the visit counter, which needs app-level data this package doesn't fetch.
+   */
+  meta?: ReactNode;
 }
 
 function withPrefix(prefix: string, href: string): string {
@@ -68,6 +75,7 @@ export function Footer({
   columns = DEFAULT_COLUMNS,
   welcomeText = 'እንኳን ደና መጣችሁ · Welcome',
   rightsTagline = '501(c)(3) nonprofit · Founded 2019',
+  meta,
 }: FooterProps) {
   const year = new Date().getFullYear();
   return (
@@ -76,15 +84,15 @@ export function Footer({
         <div className={styles.top}>
           <div className={styles.brand}>
             <div className={styles.brandHead}>
-              {/* Negative treatment — the footer sits on Eerie Black. */}
-              <Image src="/brand/icons/lion.svg" width={36} height={36} alt="" aria-hidden="true" />
+              {/* The same logotype as the header — its orange holds up on
+                  Eerie Black, so there is no separate negative treatment. */}
               <Image
-                src="/brand/logo/logo-wordmark-light.svg"
-                width={74}
-                height={26}
+                src={LOGO_SRC}
+                width={102}
+                height={40}
                 alt=""
                 aria-hidden="true"
-                className={styles.wordmark}
+                className={styles.logo}
               />
             </div>
             <p className={styles.address}>
@@ -120,6 +128,7 @@ export function Footer({
           <div>
             © {year} Ethiopian Community Los Angeles · {rightsTagline}
           </div>
+          {meta}
           <div lang="am" className={styles.welcome}>
             {welcomeText}
           </div>

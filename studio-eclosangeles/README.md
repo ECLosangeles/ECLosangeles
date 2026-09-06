@@ -104,6 +104,7 @@ this one confusing to diagnose.
 | Variable                        | Value                                                 |
 | ------------------------------- | ----------------------------------------------------- |
 | `SANITY_API_READ_TOKEN`         | Viewer token. Needed for draft previews.              |
+| `SANITY_API_WRITE_TOKEN`        | Editor token. Needed for the footer's visit counter.  |
 | `SANITY_REVALIDATE_SECRET`      | Any long random string. Must match the webhook below. |
 | `NEXT_PUBLIC_SANITY_STUDIO_URL` | `https://eclosangeles.sanity.studio`                  |
 

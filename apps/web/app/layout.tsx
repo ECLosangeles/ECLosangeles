@@ -4,6 +4,8 @@ import type { Metadata } from 'next';
 import { Footer, type HeaderNavItem } from '@eclosangeles/ui';
 import { Suspense } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
+import { SiteMotifs } from '@/components/SiteMotifs';
+import { VisitCounter } from '@/components/VisitCounter';
 import { VisualEditingBridge } from '@/components/VisualEditingBridge';
 import { getEventGalleries, getPrograms } from '@/lib/content';
 import { FOOTER_COPY, NAV_COPY } from '@/lib/site-copy';
@@ -58,6 +60,7 @@ async function buildNav(): Promise<ReadonlyArray<HeaderNavItem>> {
       label: NAV_COPY.about,
       href: '/about',
       children: [
+        { label: NAV_COPY.board, href: '/about/board' },
         { label: NAV_COPY.annualReports, href: '/about/annual-reports' },
         { label: NAV_COPY.bylaws, href: '/about/bylaws' },
         { label: NAV_COPY.financials, href: '/about/financials' },
@@ -74,11 +77,11 @@ async function buildNav(): Promise<ReadonlyArray<HeaderNavItem>> {
     },
     {
       key: 'events',
-      label: NAV_COPY.events,
+      label: NAV_COPY.mediaGallery,
       href: '/events',
       children: [
         {
-          label: NAV_COPY.galleryOfEvents,
+          label: NAV_COPY.events,
           href: '/events/gallery',
           // Each past-event gallery gets its own entry in the side flyout.
           children: galleries.map((gallery) => ({
@@ -86,20 +89,12 @@ async function buildNav(): Promise<ReadonlyArray<HeaderNavItem>> {
             href: `/events/gallery/${gallery.slug}`,
           })),
         },
+        { label: NAV_COPY.videos, href: '/events/videos' },
       ],
     },
-    { key: 'stories', label: NAV_COPY.stories, href: '/stories' },
-    {
-      key: 'contribute',
-      label: NAV_COPY.contribute,
-      // "Contribute" has no page of its own; the parent link lands on the
-      // primary action and the menu offers both ways to give.
-      href: '/donate',
-      children: [
-        { label: NAV_COPY.donate, href: '/donate' },
-        { label: NAV_COPY.membership, href: '/membership' },
-      ],
-    },
+    { key: 'donate', label: NAV_COPY.donate, href: '/donate' },
+    { key: 'membership', label: NAV_COPY.membership, href: '/membership' },
+    { key: 'volunteer', label: NAV_COPY.volunteer, href: '/volunteer' },
   ];
 }
 
@@ -110,10 +105,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={`${fraunces.variable} ${inter.variable} ${amharicFont.variable}`}>
       <body>
         <SiteHeader nav={nav} homeHref="/" />
-        {children}
+        {/* The motif layer is positioned against this wrapper, so it spans the
+            whole page rather than the viewport and scrolls with the content. */}
+        <div className="pageShell">
+          <SiteMotifs />
+          {children}
+        </div>
         <Footer
           welcomeText={`እንኳን ደና መጣችሁ · ${FOOTER_COPY.welcome}`}
           rightsTagline={FOOTER_COPY.rights}
+          meta={<VisitCounter />}
         />
         {/* Keeps content read through `sanityFetch` up to date, and streams
             edits into the Presentation tool's preview as they are typed. */}

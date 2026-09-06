@@ -5,16 +5,16 @@ import { useEffect, useState } from 'react';
 import { Header, type HeaderNavItem, type NavKey } from '@eclosangeles/ui';
 
 /**
- * Route segment -> the nav item that should read as active. Most map one to
- * one; donate and membership both sit under the "Contribute" menu.
+ * Route segment -> the nav item that should read as active. All one to one
+ * except /events, which the nav presents as "Media Gallery".
  */
 const SEGMENT_NAV_KEYS: Readonly<Record<string, NavKey>> = {
   about: 'about',
   programs: 'programs',
   events: 'events',
-  stories: 'stories',
-  donate: 'contribute',
-  membership: 'contribute',
+  donate: 'donate',
+  membership: 'membership',
+  volunteer: 'volunteer',
 };
 
 function getActiveNavKey(segment: string | null): NavKey | undefined {
